@@ -20,6 +20,10 @@ class JobSeeker < ActiveRecord::Base
     def delete_skill(name)
         self.skills.find_by(name: name).destroy
     end
+
+    def show_match
+
+    end
 end
 
 # below works:
