@@ -17,19 +17,19 @@ puts "Seeding recruiters..."
 # Recruiter.create(name: "Ali", company_name: "NASA", location: "Houston, TX")
 
 # recruiters with matching locations with job seekers
-Recruiter.create(name: "John", company_name: "Microsoft", location: "Seattle, WA")
-Recruiter.create(name: "Amanda", company_name: "Facebook", location: "San Francisco, CA")
-Recruiter.create(name: "Hanna", company_name: "Spotify", location: "New York, NY")
-Recruiter.create(name: "Eric", company_name: "Tesla", location: "San Francisco, CA")
-Recruiter.create(name: "Ali", company_name: "NASA", location: "Houston, TX")
+Recruiter.create(name: "John", company_name: "Microsoft", location: "Seattle, WA", username: "john", password: "123", email: "john@microsoft.com")
+Recruiter.create(name: "Amanda", company_name: "Facebook", location: "San Francisco, CA", username: "amanda", password: "123", email: "amanda@facebook.com")
+Recruiter.create(name: "Hanna", company_name: "Spotify", location: "New York, NY", username: "hanna", password: "123", email: "hanna@spotify.com")
+Recruiter.create(name: "Eric", company_name: "Tesla", location: "San Francisco, CA", username: "eric", password: "123", email: "eric@tesla.com")
+Recruiter.create(name: "Ali", company_name: "NASA", location: "Houston, TX", username: "ali", password: "123", email: "ali@nasa.com")
 
 puts "Seeding job seekers..."
-JobSeeker.create(name: "Suey", location: "Seattle, WA")
-JobSeeker.create(name: "Joyce", location: "New York, NY")
-JobSeeker.create(name: "Alex", location: "Seattle, WA")
-JobSeeker.create(name: "Brianna", location: "Los Angeles, CA")
-JobSeeker.create(name: "Angelo", location: "Houston, TX")
-JobSeeker.create(name: "SeanB", location: "San Francisco, CA")
+JobSeeker.create(name: "Suey", location: "Seattle, WA", username: "suey", password: "123", email: "suey@gmail.com")
+JobSeeker.create(name: "Joyce", location: "New York, NY", username: "joyce", password: "123", email: "joyce@microsoft.com")
+JobSeeker.create(name: "Alex", location: "Seattle, WA", username: "alex", password: "123", email: "alex@microsoft.com")
+JobSeeker.create(name: "Brianna", location: "Los Angeles, CA", username: "brianna", password: "123", email: "brianna@microsoft.com")
+JobSeeker.create(name: "Angelo", location: "Houston, TX", username: "angelo", password: "123", email: "angelo@microsoft.com")
+JobSeeker.create(name: "SeanB", location: "San Francisco, CA", username: "seanb", password: "123", email: "seanb@microsoft.com")
 
 puts "Seeding profiles..."
 Profile.create(user_id: Recruiter.all[0].id, user_type: "Recruiter")

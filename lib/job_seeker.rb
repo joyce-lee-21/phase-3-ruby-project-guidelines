@@ -21,17 +21,15 @@ class JobSeeker < ActiveRecord::Base
         self.skills.find_by(name: name).destroy
     end
 
-
-
-
-
-
     def view_events
         self.events.collect{|event| event.description}
     end
 
     def delete_events(event)
         self.events.find_by(description: event).destroy
+      
+    def show_match
+
     end
 end
 
