@@ -280,7 +280,6 @@ loop do
                 key(:name).ask("Add language")
                 key(:level).ask("What level are you? Rating from 1 to 10", convert: :int)
             end
-
             loop do
                 add_skill_to_profile = prompt.select("Do you want to add another skill that you are looking for to your profile?", ["Yes", "No"])
                 if add_skill_to_profile == "Yes"
@@ -292,10 +291,10 @@ loop do
                     # puts "current_user", current_user.profile.id, skill_input[:name], skill_input[:level]
                     current_user.add_skill(skill_input[:name], skill_input[:level])
                     puts "skill added"
-
+                else add_skill_to_profile == "No"
+                    puts "Hello #{current_user.name}!"
+                    recruiter_homepage(current_user)
                 end
-################################ should connect with view profile?
-            break if add_skill_to_profile == "No" #back to login/signup
             end
 
 
@@ -328,11 +327,11 @@ loop do
 
                     current_user.add_skill(skill_input[:name], skill_input[:level])
                     puts "skill added"
+                else add_skill_to_profile == "No"
+                    puts "Hello #{current_user.name}!"
+                    jobseeker_homepage(current_user)
                 end
-################################ should connect with view profile?
-            break if add_skill_to_profile == "No" #back to login/signup
-            end
-
+            end 
         end
 
     end
