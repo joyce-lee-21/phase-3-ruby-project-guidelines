@@ -27,8 +27,12 @@ class JobSeeker < ActiveRecord::Base
 
     def delete_events(event)
         self.events.find_by(description: event).destroy
-
     end
+
+    def edit_location(location)
+        self.update(location: location)
+    end
+
 
 
     def all_matching_recruiters
@@ -59,6 +63,7 @@ class JobSeeker < ActiveRecord::Base
 
     def all_matching_recruiter_company_and_name
         self.all_matching_recruiters.map{|matching_recruiter| [matching_recruiter.company_name, matching_recruiter.name]}
+
     end
 
     def all_matching_events
