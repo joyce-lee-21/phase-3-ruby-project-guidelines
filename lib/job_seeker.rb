@@ -33,6 +33,12 @@ class JobSeeker < ActiveRecord::Base
         self.update(location: location)
     end
 
+    def find_and_add_event(company_name, date)
+        date = date.to_s
+        event_id = Recruiter.find_by(company_name: company_name).events.find_by(event_date: DateTime.parse(date)).id
+        AddEvent.create(event_id: event_id, job_seeker_id: self.id)
+    end
+
 
 
     def all_matching_recruiters
@@ -63,6 +69,11 @@ class JobSeeker < ActiveRecord::Base
 
     def all_matching_recruiter_company_and_name
         self.all_matching_recruiters.map{|matching_recruiter| [matching_recruiter.company_name, matching_recruiter.name]}
+
+    end
+
+    def all_matching_recruiter_company_name
+        self.all_matching_recruiters.map{|matching_recruiter| matching_recruiter.company_name}
 
     end
 
