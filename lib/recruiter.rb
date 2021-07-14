@@ -47,8 +47,25 @@ class Recruiter < ActiveRecord::Base
         self.update(company_name: company_name)
     end
     
-    def show_match
-        # match a list of job seekers based on skill, not event
+    def all_matching_job_seekers
+        recruiter_skill_names = self.view_skills #=> array of skill_name
+
+        all_job_seeker_skills_flattened = JobSeeker.all.map{|job_seeker| job_seeker.skills}.flatten #=> return an arr of skill instance
+        
+        matching = recruiter_skill_names.map{|recruiter_skill_name| 
+            all_job_seeker_skills_flattened.select{|job_seeker_skill| job_seeker_skill.name == recruiter_skill_name }
+        }.flatten #=> return all the matching skill instance with profile_id
+
+        mactching_profile_id_arr = matching.map {|match| match.profile_id}
+
+        #sort array by count-of-occurrences : https://stackoverflow.com/questions/10842210/sort-and-display-items-by-count-of-occurrences/10842419
+        sorted_mactching_profile_id_arr = mactching_profile_id_arr.group_by{|x| x}.sort_by{|k, v| -v.size}.map(&:first)
+        sorted_matching_recruitor_arr = sorted_mactching_profile_id_arr.map{|matching_profile_id| 
+            JobSeeker.all.select{|job_seeker| job_seeker.profile.id == matching_profile_id}}.flatten #=>return the array of matching recruiter instance
+    end
+
+    def all_matching_job_seeker_names_and_emails
+        self.all_matching_job_seekers.map{|matching_job_seeker| [matching_job_seeker.name, matching_job_seeker.email]}
     end
 
 end
