@@ -65,7 +65,9 @@ class Recruiter < ActiveRecord::Base
     end
 
     def all_matching_job_seeker_names_and_emails
-        self.all_matching_job_seekers.map{|matching_job_seeker| [matching_job_seeker.name, matching_job_seeker.email]}
+        self.all_matching_job_seekers.map{|matching_job_seeker| 
+            "#{matching_job_seeker.name}, #{matching_job_seeker.email}"
+        }
     end
 
     def all_matching_job_seeker_names
