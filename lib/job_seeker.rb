@@ -27,7 +27,9 @@ class JobSeeker < ActiveRecord::Base
 
     def delete_events(event)
         self.events.find_by(description: event).destroy
-      
+
+    end
+    
     def show_match
 
     end
