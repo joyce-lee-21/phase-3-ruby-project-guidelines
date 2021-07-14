@@ -83,7 +83,7 @@ def jobseeker_homepage(current_user)
         elsif main_menu_choice == "Recruiter Matches"
             # Recruiter Menu Start
             # Returns all recruiters matched and asks for recruiter selection:
-            puts recruiter_choices = current_user.all_matching_recruiter_company_name #MATCH LOGIC METHOD USED HERE!!
+            puts recruiter_choices = current_user.all_matching_recruiter_company_and_name #MATCH LOGIC METHOD USED HERE!!
                 # recruiter_choices = current_user.show_match.collect{|recruiter| recruiter.name} #MATCH LOGIC METHOD USED HERE!!
                 match_selection = prompt.select('Select a match:', recruiter_choices)
                 # Shows recruiter selected and asks for event selection:
@@ -212,14 +212,14 @@ def recruiter_homepage(current_user)
         elsif main_menu_choice == "Job-Seeker Matches"
             # Job-Seeker Matches Menu Start
             # Returns all job seekers matched and asks for recruiter selection:
+            puts current_user.all_matching_job_seeker_names_and_emails
 
-
-            puts job_seeker_choices = current_user.all_matching_job_seeker_names #MATCH LOGIC METHOD USED HERE!!
-                match_selection = prompt.select('Select a match:', job_seeker_choices)
-                # Shows recruiter selected and asks for event selection:
-                puts match_selection
-                    selected_user = current_user.all_matching_job_seekers.find{|job_seeker| job_seeker.name == match_selection}
-                    puts "Email: #{selected_user.email}"
+            # puts job_seeker_choices = current_user.all_matching_job_seeker_names #MATCH LOGIC METHOD USED HERE!!
+            #     match_selection = prompt.select('Select a match:', job_seeker_choices)
+            #     # Shows recruiter selected and asks for event selection:
+            #     puts match_selection
+            #         selected_user = current_user.all_matching_job_seekers.find{|job_seeker| job_seeker.name == match_selection}
+            #         puts "Email: #{selected_user.email}"
             # Job-Seeker Matches Menu End
 
 
