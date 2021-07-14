@@ -68,6 +68,10 @@ class Recruiter < ActiveRecord::Base
         self.all_matching_job_seekers.map{|matching_job_seeker| [matching_job_seeker.name, matching_job_seeker.email]}
     end
 
+    def all_matching_job_seeker_names
+        self.all_matching_job_seekers.map{|matching_job_seeker| matching_job_seeker.name}
+    end
+
 end
 
 # below works:

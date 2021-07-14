@@ -83,17 +83,18 @@ def jobseeker_homepage(current_user)
         elsif main_menu_choice == "Recruiter Matches"
             # Recruiter Menu Start
             # Returns all recruiters matched and asks for recruiter selection:
-            puts current_user.show_match #MATCH LOGIC METHOD USED HERE!!
-                recruiter_choices = current_user.show_match.collect{|recruiter| recruiter.name} #MATCH LOGIC METHOD USED HERE!!
+            puts recruiter_choices = current_user.all_matching_recruiter_company_name #MATCH LOGIC METHOD USED HERE!!
+                # recruiter_choices = current_user.show_match.collect{|recruiter| recruiter.name} #MATCH LOGIC METHOD USED HERE!!
                 match_selection = prompt.select('Select a match:', recruiter_choices)
                 # Shows recruiter selected and asks for event selection:
-                puts match_selection
-                # not sure about the below code
-                    event_choices = match_selection.events
-                    event_selection = prompt.select('Select an event to add:', event_choices)
-                    # Adds selected event to job seeker profile
-                    current_user.add_events(event_selection)
-                    puts "Event: #{add_event} added!"
+                puts match_selection #company_name as string
+
+                event_choices = Recruiter.all.find{|recruiter| recruiter.company_name == match_selection}.events #=>return event instance arr
+                event_choice_times = event_choices.map{|event| event.event_date}
+                event_selection = prompt.select('Select an event to add:', event_choice_times)
+                current_user.find_and_add_event(match_selection, event_selection)
+                puts "Event at #{event_selection} with #{match_selection} added!"
+
             # Recruiter Menu End
         else main_menu_choice == "LOGOUT"
             puts "Logged out."
@@ -211,14 +212,18 @@ def recruiter_homepage(current_user)
         elsif main_menu_choice == "Job-Seeker Matches"
             # Job-Seeker Matches Menu Start
             # Returns all job seekers matched and asks for recruiter selection:
-            puts current_user.show_match #MATCH LOGIC METHOD USED HERE!!
-                job_seeker_choices = current_user.show_match.collect{|seeker| seeker.name} #MATCH LOGIC METHOD USED HERE!!
+
+
+            puts job_seeker_choices = current_user.all_matching_job_seeker_names #MATCH LOGIC METHOD USED HERE!!
                 match_selection = prompt.select('Select a match:', job_seeker_choices)
                 # Shows recruiter selected and asks for event selection:
                 puts match_selection
-                    selected_user = current_user.show_match.find_by(name: match_selection)
-                    puts "Email: #{selected_user.email_address}"
+                    selected_user = current_user.all_matching_job_seekers.find{|job_seeker| job_seeker.name == match_selection}
+                    puts "Email: #{selected_user.email}"
             # Job-Seeker Matches Menu End
+
+
+
         else main_menu_choice == "LOGOUT"
             puts "Logged out."
             break
