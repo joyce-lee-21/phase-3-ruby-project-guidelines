@@ -27,11 +27,18 @@ class JobSeeker < ActiveRecord::Base
 
     def delete_events(event)
         self.events.find_by(description: event).destroy
-
     end
-    
-    def show_match
 
+    def edit_location(location)
+        self.update(location: location)
+    end
+
+    def show_match
+        # match a list of recruiters based on skill, not event
+    end
+
+    def view_matched_events
+        # may use show_match method
     end
 end
 

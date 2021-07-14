@@ -31,6 +31,21 @@ class Recruiter < ActiveRecord::Base
 
     def add_event(event)
     end
+
+    def edit_event(event_to_change, updated_event)
+        update_this = self.events.find_by(description: event_to_change)
+        update_this.event_date = updated_event[:event_date]
+        update_this.location = updated_event[:location]
+        update_this.description = updated_event[:description]
+    end
+
+    def edit_location(location)
+        self.update(location: location)
+    end
+
+    def edit_company_name(company_name)
+        self.update(company_name: company_name)
+    end
     
     def show_match
         # match a list of job seekers based on skill, not event
