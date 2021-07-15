@@ -82,7 +82,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header></Header>
+        <Header currentUser={currentUser}
+                setCurrentUser={setCurrentUser}/>
         <Switch>
           <Route exact path="/">
             <Homepage />
@@ -104,10 +105,16 @@ function App() {
               <JobSeekersMatchContainer currentUser={currentUser}/>}
           </Route>
           <Route path="/profile">
-            <ProfileContainer />
+            <ProfileContainer userStatus={userStatus}
+                              currentUser={currentUser}
+                              recruiterArr={recruiterArr}
+                              jobseekerArr={jobseekerArr}/>
           </Route>
           <Route path="/events">
-            <EventsContainer />
+            <EventsContainer userStatus={userStatus}
+                              currentUser={currentUser}
+                              recruiterArr={recruiterArr}
+                              jobseekerArr={jobseekerArr}/>
           </Route>
         </Switch>
       </Router>

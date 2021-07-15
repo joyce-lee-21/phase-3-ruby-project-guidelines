@@ -43,6 +43,26 @@ def jobseeker_homepage(current_user)
                         end
                     end
                     # Skills Menu End
+                    # def skills_menu
+                    #     puts "Skills: #{current_user.view_skills}"
+                    #     skills_selection = prompt.select('Do you want to add, or delete skills?', ["Add", "Delete", "BACK"])
+                    #     if skills_selection == "Add"
+                    #         new_skill = prompt.collect{
+                    #             key(:name).ask("Add skill name in TitleCase (i.e., JavaScript):")
+                    #             key(:level).ask("Add skill level:")
+                    #         }
+                    #         current_user.add_skill(new_skill[:name], new_skill[:level])
+                    #         puts "#{current_user.name} skill: #{new_skill[:name]} added!"
+                    #         skills_selection
+                    #     elsif skills_selection == "Delete"
+                    #         remove_skill = prompt.collect{key(:name).ask("Delete skill name:")}
+                    #         current_user.delete_skill(remove_skill[:name])
+                    #         puts "#{current_user.name} skill: #{remove_skill[:name]} deleted!"
+                    #         skills_selection
+                    #     else skills_selection == "BACK"
+                    #         skills_menu
+                    #     end
+                    # end
                 elsif profile_choice == "Location"
                     # Location Menu Start
                     loop do
@@ -109,70 +129,77 @@ def recruiter_homepage(current_user)
     # Home Page Start
     loop do
     # //Job Seeker is signed in, main menu is prompted
-        main_menu_choice = prompt.select('Do you want to view profile, view event list, job-seeker matches, or logout?', ["Profile", "Events", "Job-Seeker Matches", "LOGOUT"])
-        # current_user should be used from global variable from login/signup step
-
+        main_menu_choice = prompt.select(
+            'Do you want to view profile, view event list, job-seeker matches, or logout?', 
+            ["Profile", "Events", "Job-Seeker Matches", "LOGOUT"]
+        )
         # Main Menu
         if main_menu_choice == "Profile"
             # Profile Menu Start
             loop do
-                profile_choice = prompt.select('Select from:', ["Skills", "Location", "Company Name", "BACK TO MAIN MENU"])
+                profile_choice = prompt.select(
+                    'Select from:', 
+                    ["Skills", "Location", "Company Name", "BACK TO MAIN MENU"]
+                )
                 if profile_choice == "Skills"
                     # Skills Menu Start
-                    loop do
                         puts "Skills: #{current_user.view_skills}"
-                        skills_selection = prompt.select('Do you want to add, or delete skills?', ["Add", "Delete", "BACK"])
-                        if skills_selection == "Add"
-                            new_skill = prompt.collect{
-                                key(:name).ask("Add skill name in TitleCase (i.e., JavaScript):")
-                                key(:level).ask("Add skill level:")
-                            }
-                            current_user.add_skill(new_skill[:name], new_skill[:level])
-                            puts "#{current_user.name} skill: #{new_skill[:name]} added!"
-                            skills_selection
-                        elsif skills_selection == "Delete"
-                            remove_skill = prompt.collect{key(:name).ask("Delete skill name:")}
-                            current_user.delete_skill(remove_skill[:name])
-                            puts "#{current_user.name} skill: #{remove_skill[:name]} deleted!"
-                            skills_selection
-                        else skills_selection == "BACK"
-                            break
+                        loop do
+                            skills_selection = prompt.select(
+                                'Do you want to add, or delete skills?', 
+                                ["Add", "Delete", "BACK"]
+                            )
+                            if skills_selection == "Add"
+                                new_skill = prompt.collect{
+                                    key(:name).ask("Add skill name in TitleCase (i.e., JavaScript):")
+                                    key(:level).ask("Add skill level:")
+                                }
+                                current_user.add_skill(new_skill[:name], new_skill[:level])
+                                puts "#{current_user.name} skill: #{new_skill[:name]} added!"
+                                skills_selection
+                            elsif skills_selection == "Delete"
+                                remove_skill = prompt.collect{key(:name).ask("Delete skill name:")}
+                                current_user.delete_skill(remove_skill[:name])
+                                puts "#{current_user.name} skill: #{remove_skill[:name]} deleted!"
+                                skills_selection
+                            else skills_selection == "BACK"
+                                break
+                            end
                         end
-                    end
                     # Skills Menu End
                 elsif profile_choice == "Location"
                     # Location Menu Start
-                    loop do
                         puts "Location: #{current_user.location}"
-                        location_selection = prompt.select('Do you want to edit your location?', ["Edit", "BACK"])
-                        if location_selection == "Edit"
-                            new_location = prompt.collect{
-                                key(:location).ask("City, State (i.e., New York, NY):")
-                            }
-                            current_user.edit_location(new_location[:location])
-                            puts "#{current_user.name} location: #{current_user.location} updated!"
-                            location_selection
-                        else location_selection == "BACK"
-                            break
+                        loop do
+                            location_selection = prompt.select('Do you want to edit your location?', ["Edit", "BACK"])
+                            if location_selection == "Edit"
+                                new_location = prompt.collect{
+                                    key(:location).ask("City, State (i.e., New York, NY):")
+                                }
+                                current_user.edit_location(new_location[:location])
+                                puts "#{current_user.name} location: #{current_user.location} updated!"
+                                location_selection
+                            else location_selection == "BACK"
+                                break
+                            end
                         end
-                    end
                     # Location Menu End
                 elsif profile_choice == "Company Name"
                     # Company Name Menu Start
-                    loop do
                         puts "Company Name: #{current_user.company_name}"
-                        company_selection = prompt.select('Do you want to edit your Company?', ["Edit", "BACK"])
-                        if company_selection == "Edit"
-                            new_company = prompt.collect{
-                                key(:company_name).ask("Company Name:")
-                            }
-                            current_user.edit_company_name(new_company[:company_name])
-                            puts "#{current_user.name} company: #{current_user.company_name} updated!"
-                            company_selection
-                        else company_selection == "BACK"
-                            break
+                        loop do
+                            company_selection = prompt.select('Do you want to edit your Company?', ["Edit", "BACK"])
+                            if company_selection == "Edit"
+                                new_company = prompt.collect{
+                                    key(:company_name).ask("Company Name:")
+                                }
+                                current_user.edit_company_name(new_company[:company_name])
+                                puts "#{current_user.name} company: #{current_user.company_name} updated!"
+                                company_selection
+                            else company_selection == "BACK"
+                                break
+                            end
                         end
-                    end
                     # Company Name Menu End
                 else profile_choice == "BACK TO MAIN MENU"
                     break
@@ -222,11 +249,8 @@ def recruiter_homepage(current_user)
             #         puts "Email: #{selected_user.email}"
             # Job-Seeker Matches Menu End
 
-
-
         else main_menu_choice == "LOGOUT"
             puts "Logged out."
-            break
         end
     end
     # Home Page End
