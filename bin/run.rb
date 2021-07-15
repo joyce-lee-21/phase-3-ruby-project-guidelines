@@ -43,26 +43,6 @@ def jobseeker_homepage(current_user)
                         end
                     end
                     # Skills Menu End
-                    # def skills_menu
-                    #     puts "Skills: #{current_user.view_skills}"
-                    #     skills_selection = prompt.select('Do you want to add, or delete skills?', ["Add", "Delete", "BACK"])
-                    #     if skills_selection == "Add"
-                    #         new_skill = prompt.collect{
-                    #             key(:name).ask("Add skill name in TitleCase (i.e., JavaScript):")
-                    #             key(:level).ask("Add skill level:")
-                    #         }
-                    #         current_user.add_skill(new_skill[:name], new_skill[:level])
-                    #         puts "#{current_user.name} skill: #{new_skill[:name]} added!"
-                    #         skills_selection
-                    #     elsif skills_selection == "Delete"
-                    #         remove_skill = prompt.collect{key(:name).ask("Delete skill name:")}
-                    #         current_user.delete_skill(remove_skill[:name])
-                    #         puts "#{current_user.name} skill: #{remove_skill[:name]} deleted!"
-                    #         skills_selection
-                    #     else skills_selection == "BACK"
-                    #         skills_menu
-                    #     end
-                    # end
                 elsif profile_choice == "Location"
                     # Location Menu Start
                     loop do
