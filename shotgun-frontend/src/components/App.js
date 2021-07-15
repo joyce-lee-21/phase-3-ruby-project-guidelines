@@ -26,6 +26,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [recruiterArr, setRecruiterArr] = useState([])
   const [jobseekerArr, setJobseekerArr] = useState([])
+  
 
   const history = useHistory();
 
@@ -49,19 +50,20 @@ function App() {
   const onLoginSubmit = (enterLoginUsername, enterLoginPD) =>{
     console.log(enterLoginUsername, enterLoginPD)
     //verify 
-    const isRecruiter = recruiterArr.filter(r => r.username === enterLoginUsername && r.password === enterLoginPD) 
-    const isJobSeeker = jobseekerArr.filter(j => j.username === enterLoginUsername && j.password === enterLoginPD) 
-    console.log(isRecruiter, isJobSeeker)
-    if (isRecruiter.length != 0 ) {
+    const isRecruiter = recruiterArr.find(r => r.username === enterLoginUsername && r.password === enterLoginPD) 
+    const isJobSeeker = jobseekerArr.find(j => j.username === enterLoginUsername && j.password === enterLoginPD) 
+    // console.log(isRecruiter, isJobSeeker)
+    if (isRecruiter) {
       //set userStatus
       setUserStatus("recruiter")
       //push to match page
       history.push("/matches")
       //set currentUser
       setCurrentUser(isRecruiter)
-    } else if (isJobSeeker.length != 0) {
+    } else if (isJobSeeker) {
       setUserStatus("jobseeker")
-      history.push("/matches")
+      console.log("isJobSeeker",isJobSeeker)
+      // history.push("/matches")
       setCurrentUser(isJobSeeker)
     } else {
       alert("Incorrect username or password, please re-enter.");
@@ -96,7 +98,10 @@ function App() {
             <Login onLoginSubmit={onLoginSubmit}/>
           </Route>
           <Route path="/matches">
-            {userStatus === "recruiter" ? <RecruitersMatchContainer /> : <JobSeekersMatchContainer />}
+            {userStatus === "recruiter" ? 
+              <RecruitersMatchContainer /> 
+              : 
+              <JobSeekersMatchContainer currentUser={currentUser}/>}
           </Route>
           <Route path="/profile">
             <ProfileContainer />
