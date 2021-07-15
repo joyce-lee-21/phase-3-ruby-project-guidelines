@@ -90,6 +90,9 @@ class JobSeeker < ActiveRecord::Base
         self.all_matching_events.select{|event| event.include?(self.location)}
     end
 
+    def all_matching_events_for_front_end
+        self.all_matching_recruiters.map{|matching_recruiter| matching_recruiter.events}.flatten
+    end
 
 end
 

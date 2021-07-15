@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch, 
   Route,
-  useHistory 
+  useHistory
 } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
@@ -57,9 +57,10 @@ function App() {
       //set userStatus
       setUserStatus("recruiter")
       //push to match page
-      history.push("/matches")
+      // history.push("/matches")
       //set currentUser
       setCurrentUser(isRecruiter)
+      console.log("currentUserInAppWhenRecruiterLogin", currentUser, "isRecruiter", isRecruiter)
     } else if (isJobSeeker) {
       setUserStatus("jobseeker")
       console.log("isJobSeeker",isJobSeeker)
@@ -82,6 +83,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        {/* <button onClick={history.push("/")}>yo</button> */}
         <Header currentUser={currentUser}
                 setCurrentUser={setCurrentUser}/>
         <Switch>
@@ -100,7 +102,7 @@ function App() {
           </Route>
           <Route path="/matches">
             {userStatus === "recruiter" ? 
-              <RecruitersMatchContainer /> 
+              <RecruitersMatchContainer currentUser={currentUser}/> 
               : 
               <JobSeekersMatchContainer currentUser={currentUser}/>}
           </Route>

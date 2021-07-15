@@ -8,7 +8,7 @@ function JobSeekersMatchContainer({currentUser}) {
        <h1>JobSeekers Match Container!</h1>
         <JobSeekersMatchFilter />
         <JobSeekersMatchSidebar currentUser={currentUser}/>
-        <JobSeekersMatchEventList />
+        <JobSeekersMatchEventList currentUser={currentUser}/>
       </div>
     );
   }
