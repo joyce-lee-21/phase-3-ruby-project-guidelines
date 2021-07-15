@@ -3,7 +3,7 @@
 function JobSeekersMatchEventList() {
     return (
       <div className="JobSeekersMatchEventList">
-       <h1>hello</h1>
+       <h1>JobSeekers Match Event List!</h1>
       </div>
     );
   }

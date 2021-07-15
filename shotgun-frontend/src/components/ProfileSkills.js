@@ -3,7 +3,7 @@
 function ProfileSkills() {
     return (
       <div className="ProfileSkills">
-       <h1>hello</h1>
+       <h1>Profile Skills!</h1>
       </div>
     );
   }

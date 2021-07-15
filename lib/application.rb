@@ -3,14 +3,15 @@ class Application
       resp = Rack::Response.new
       req = Rack::Request.new(env)
 
-    #   if path matches /events/
+    #   if path matches /events/ 
         if req.path.match(/events/) && req.get?
         # get all events objects with the appropriate attr labels
+        # => next 3 lines have access to relationships
             events = Event.all.map do |event|
                 {id: event.id, description: event.description, event_date: event.event_date, location: event.location}
             end
 
-            # return the objects into json objects; {:events} = what is going to appear in browser, can be named whatever
+            # return the objects into json objects in frontend, once it hits frontend, you lose access to relationships; {:events} = what is going to appear in browser, can be named whatever
             return [200, { 'Content-Type' => 'application/json' }, [ {:events => events}.to_json ]]   
         
         elsif req.path.match(/events/) && req.post?
@@ -19,7 +20,6 @@ class Application
             # need to edit for functionality of post
             return [200, { 'Content-Type' => 'application/json' }, [ {:events => events}.to_json ]]  
         else
-
             resp.write "Path Not Found"
         end
         resp.finish

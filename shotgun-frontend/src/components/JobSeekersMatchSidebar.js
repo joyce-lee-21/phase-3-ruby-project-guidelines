@@ -3,7 +3,7 @@
 function JobSeekersMatchSidebar() {
     return (
       <div className="JobSeekersMatchSidebar">
-       <h1>hello</h1>
+       <h1>JobSeekers Match Sidebar!</h1>
       </div>
     );
   }

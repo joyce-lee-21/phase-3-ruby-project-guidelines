@@ -3,7 +3,7 @@
 function JobSeekersMatchFilter() {
     return (
       <div className="JobSeekersMatchFilter">
-       <h1>hello</h1>
+       <h1>JobSeekers Match Filter!</h1>
       </div>
     );
   }

@@ -4,7 +4,7 @@
 function SignUp() {
     return (
       <div className="SignUp">
-       <h1>hello</h1>
+       <h1>Signup!!</h1>
       </div>
     );
   }
