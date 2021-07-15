@@ -4,6 +4,7 @@ function RecruitersMatchContainer() {
     return (
       <div className="RecruitersMatchContainer">
        <h1>Recruiters Match Container!</h1>
+       <RecruitersMatchList />
       </div>
     );
   }
