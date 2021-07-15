@@ -5,7 +5,7 @@ class Recruiter < ActiveRecord::Base
     has_many :events
     has_many :add_events, through: :events
 
-    def recruiters
+    def job_seekers
         self.events.collect{|event| event.job_seekers}
     end
 

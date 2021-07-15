@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_13_171909) do
+ActiveRecord::Schema.define(version: 2021_07_14_233053) do
 
   create_table "add_events", force: :cascade do |t|
     t.integer "event_id"
@@ -22,6 +22,8 @@ ActiveRecord::Schema.define(version: 2021_07_13_171909) do
     t.datetime "event_date"
     t.text "location"
     t.text "description"
+    t.string "name"
+    t.text "image"
   end
 
   create_table "job_seekers", force: :cascade do |t|
@@ -30,6 +32,7 @@ ActiveRecord::Schema.define(version: 2021_07_13_171909) do
     t.string "username"
     t.string "password"
     t.string "email"
+    t.text "image"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -44,12 +47,14 @@ ActiveRecord::Schema.define(version: 2021_07_13_171909) do
     t.string "username"
     t.string "password"
     t.string "email"
+    t.text "logo"
   end
 
   create_table "skills", force: :cascade do |t|
     t.integer "profile_id"
     t.string "name"
     t.integer "level"
+    t.text "logo"
   end
 
 end
