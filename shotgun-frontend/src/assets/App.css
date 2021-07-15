@@ -90,6 +90,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-right: 10px;
 }
 
 button {
@@ -110,6 +111,39 @@ button {
 
 button:hover {
   cursor: pointer;
+}
+
+.homepage-image {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.homepage-image img{
+  height: 200px;
+}
+
+.homepage-content {
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+}
+
+.homepage-partners {
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+}
+
+.logo-container{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.logo-container img{
+  height: 80px;
+  margin: 20px;
 }
 
 /* Sign up pages */
