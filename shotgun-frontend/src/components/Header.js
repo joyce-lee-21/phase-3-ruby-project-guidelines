@@ -1,31 +1,35 @@
 import {NavLink} from 'react-router-dom';
 
-function Header() {
-    // CREATE STATE FOR THIS:
-    let user_auth = true
+function Header( {currentUser, setCurrentUser} ) {
+
+
+    const handleClick = () => {
+        setCurrentUser(null)
+    }
     return (
         <div className="header">
             
-            
-            {user_auth === true ?
+            {currentUser !== null ?
                 <>
                     <div className="header-left">
-                        <h2 className="logo">Skilled Match</h2>
+                        <NavLink exact to="/" className="nav-link" style={{ textDecoration: 'none' }}>
+                            <h2 className="logo">Skilled Match</h2>
+                        </NavLink>
                         <div className="nav-menu">
-                            <NavLink to="/profile" className="nav-link">
-                                Profile
+                            <NavLink to="/profile" className="nav-link" style={{ textDecoration: 'none' }}>
+                                <button className="profile" >Profile</button>
                             </NavLink>
-                            <NavLink to="/matches" className="nav-link">
-                                Matches
+                            <NavLink to="/matches" className="nav-link" style={{ textDecoration: 'none' }}>
+                                <button className="matches">Matches</button>
                             </NavLink>
-                            <NavLink to="/events" className="nav-link">
-                               Events
+                            <NavLink to="/events" className="nav-link" style={{ textDecoration: 'none' }}>
+                                <button className="events">Events</button>
                             </NavLink>
                         </div>
                     </div>
 
                     <div className="header-right">
-                        <NavLink to="/">
+                        <NavLink exact to="/" style={{ textDecoration: 'none' }}>
                             <button className="logout">Logout</button>
                         </NavLink>
                     </div>
@@ -34,10 +38,10 @@ function Header() {
                 : <>
                      <h2 className="logo">Skilled Match</h2>
                      <div className="header-right">
-                        <NavLink to="/login">
-                            <button className="login">Login</button>
+                        <NavLink to="/login" style={{ textDecoration: 'none' }}>
+                            <button className="login" onClick={handleClick}>Login</button>
                         </NavLink>
-                        <NavLink to="/signup">
+                        <NavLink to="/signup" style={{ textDecoration: 'none' }}>
                             <button className="signup">Sign Up</button>
                         </NavLink>
                     </div>
