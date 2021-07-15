@@ -36,7 +36,8 @@ class Application
                  events: job_seeker.events,
                  view_events: job_seeker.view_events,
                  recruiters: job_seeker.recruiters,
-                 all_matching_recruiters: job_seeker.all_matching_recruiters
+                 all_matching_recruiters: job_seeker.all_matching_recruiters,
+                 all_matching_events: job_seeker.all_matching_events_for_front_end
                 }
             end
 
