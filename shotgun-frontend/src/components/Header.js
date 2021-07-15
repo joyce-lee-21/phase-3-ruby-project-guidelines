@@ -2,31 +2,46 @@ import {NavLink} from 'react-router-dom';
 
 function Header() {
     // CREATE STATE FOR THIS:
-    let user_auth = false
+    let user_auth = true
     return (
-        <div className="Header">
-            <h2>Skilled Match</h2>
-            {user_auth === true
-                ? [<NavLink to="/profile">
-                        <button className="profile">Profile</button>
-                    </NavLink>,
-                    <NavLink to="/matches">
-                        <button className="matches">Matches</button>
-                    </NavLink>,
-                    <NavLink to="/events">
-                        <button className="events">Events</button>
-                    </NavLink>,
-                    <NavLink to="/">
-                        <button className="logout">Logout</button>
-                    </NavLink>
-                ]
-                : [<NavLink to="/login">
-                        <button className="login">Login</button>
-                    </NavLink>,
-                    <NavLink to="/signup">
-                        <button className="signup">Sign Up</button>
-                    </NavLink>
-                ]
+        <div className="header">
+            
+            
+            {user_auth === true ?
+                <>
+                    <div className="header-left">
+                        <h2 className="logo">Skilled Match</h2>
+                        <div className="nav-menu">
+                            <NavLink to="/profile" className="nav-link">
+                                Profile
+                            </NavLink>
+                            <NavLink to="/matches" className="nav-link">
+                                Matches
+                            </NavLink>
+                            <NavLink to="/events" className="nav-link">
+                               Events
+                            </NavLink>
+                        </div>
+                    </div>
+
+                    <div className="header-right">
+                        <NavLink to="/">
+                            <button className="logout">Logout</button>
+                        </NavLink>
+                    </div>
+                </>
+                
+                : <>
+                     <h2 className="logo">Skilled Match</h2>
+                     <div className="header-right">
+                        <NavLink to="/login">
+                            <button className="login">Login</button>
+                        </NavLink>
+                        <NavLink to="/signup">
+                            <button className="signup">Sign Up</button>
+                        </NavLink>
+                    </div>
+                </>
             }
         </div>
     );

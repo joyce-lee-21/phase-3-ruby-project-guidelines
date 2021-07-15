@@ -5,17 +5,18 @@ import SignUpInstructions from "./SignUpInstructions"
 
 
 
-function SignUp() {
-  const [whoSignUp, setWhoSignUp] = useState("n")
+function SignUp({userStatus, setUserStatus, onJobSeekerSignUp, onRecruiterSignUp}) {
 
-      if (whoSignUp === "n") {
-        return <SignUpInstructions/>;
+  
 
-      } else if (whoSignUp === "r") {
-        return <SignUpRecruiter />;
+      if (userStatus === "none") {
+        return <SignUpInstructions setUserStatus={setUserStatus}/>;
+
+      } else if (userStatus === "recruiter") {
+        return <SignUpRecruiter setUserStatus={setUserStatus} onRecruiterSignUp={onRecruiterSignUp}/>;
 
     } else {
-      return <SignUpJobSeeker />;
+      return <SignUpJobSeeker setUserStatus={setUserStatus} onJobSeekerSignUp={onJobSeekerSignUp}/>;
 
     }
 }
