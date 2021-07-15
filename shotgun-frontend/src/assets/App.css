@@ -113,6 +113,7 @@ button:hover {
   cursor: pointer;
 }
 
+/* Homepage */
 .homepage-image {
   display: flex;
   justify-content: center;
@@ -171,3 +172,83 @@ button:hover {
   height: 10vh;
   width: 30vw;
 }
+
+/* Profile pages */
+.greeting-box{
+  width: fit-content;
+  margin: 20px;
+  margin-left: 50px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: left;
+  background-color: #94aac4;
+  color: #f5f5f5;
+}
+
+.profile-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-content{
+  width: auto;
+  margin: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  background-color: #94aac4;
+  color: #f5f5f5;
+}
+
+.user-details{
+  width: 50%;
+  margin: 20px;
+  margin-left: 50px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: left;
+  background-color: #94aac4;
+  color: #f5f5f5;
+  flex-direction: column;
+}
+
+.skills-container{
+  width: 50%;
+  margin: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: left;
+  background-color: #94aac4;
+  color: #f5f5f5;
+}
+
+.user-details-text-box, .skills-details-box {
+  display: flex;
+  justify-content: flex-start;
+  padding: 5px;
+}
+
+.user-details-text-box h4, .skills-details-box h4{
+  margin: 5px;
+}
+
+.user-details-text-box p, .skills-details-box p{
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.skills-container{
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
