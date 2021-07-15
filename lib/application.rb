@@ -3,9 +3,10 @@ class Application
       resp = Rack::Response.new
       req = Rack::Request.new(env)
 
-    #   if path matches /events/
+    #   if path matches /events/ 
         if req.path.match(/events/) && req.get?
         # get all events objects with the appropriate attr labels
+        # => next 3 lines have access to relationships
             events = Event.all.map do |event|
                 {id: event.id, 
                  name: event.name,
@@ -192,7 +193,6 @@ class Application
         
 
         else
-
             resp.write "Path Not Found"
         end
         resp.finish
