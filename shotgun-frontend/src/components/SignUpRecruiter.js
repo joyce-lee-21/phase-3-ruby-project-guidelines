@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function Login() {
+ function SignUpRecruiter() {
   const classes = useStyles();
 
   return (
@@ -62,6 +62,50 @@ const useStyles = makeStyles((theme) => ({
             autoComplete="username"
             autoFocus
           />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            autoFocus
+          />
+           <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Your Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+          /> 
+           <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="company_name"
+            label="Company Name"
+            name="company_name"
+            autoComplete="company_name"
+            autoFocus
+          />           
+           <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="location"
+            label="Location"
+            name="location"
+            autoComplete="location"
+            autoFocus
+          />               
           <TextField
             variant="outlined"
             margin="normal"
@@ -104,4 +148,4 @@ const useStyles = makeStyles((theme) => ({
   );
 }
 
-export default Login;
+export default SignUpRecruiter;
