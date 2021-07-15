@@ -1,13 +1,13 @@
 import React from "react";
 
 
-function SignUpInstructions() {
+function SignUpInstructions({setUserStatus}) {
 
     return (
-      <div>
-        <h1>Please select your signup</h1>
-        <button>I'm a job seeker</button>
-        <button>I'm a recruiter</button>
+      <div className="sign-up-instructions-contianer">
+        <h2 className="sign-up-header">Please select your signup</h2>
+        <button className="sign-up-choice-btn" onClick={(e)=>setUserStatus("jobseeker")}>I'm a job seeker</button>
+        <button className="sign-up-choice-btn" onClick={(e)=>setUserStatus("recruiter")}>I'm a recruiter</button>
       </div>
     )
   }
