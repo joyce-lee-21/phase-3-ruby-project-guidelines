@@ -3,7 +3,7 @@
 function ProfileUserDetails() {
     return (
       <div className="ProfileUserDetails">
-       <h1>hello</h1>
+       <h1>Profile User Details!</h1>
       </div>
     );
   }

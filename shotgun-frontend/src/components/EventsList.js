@@ -3,7 +3,7 @@
 function EventsList() {
     return (
       <div className="EventsList">
-       <h1>hello</h1>
+       <h1>Events List!</h1>
       </div>
     );
   }
