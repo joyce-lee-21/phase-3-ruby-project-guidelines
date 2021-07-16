@@ -47,12 +47,14 @@ class Application
 
         elsif req.path.match(/events/) && req.patch?
             patch_content = JSON.parse(req.body.read)
-            puts patch_content
-###########################add patch method  patch_event = 
+            puts patch_content["id"]
+            patch_event = Event.all.find{|event| event.id == patch_content["id"]}
+            # puts patch_skill
+            patch_event.update(:name => patch_content["name"], :event_date => patch_content["event_date"], :location => patch_content["location"], :description => patch_content["description"])
 
             return [200, { 'Content-Type' => 'application/json' }, [ {:patch_event => patch_event}.to_json ]] 
-            
 
+            
         elsif req.path.match(/jobseekers/) && req.get?
             jobseekers = JobSeeker.all.map do |job_seeker|
                 {id: job_seeker.id, 
