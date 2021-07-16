@@ -12,7 +12,7 @@ function ProfileContainer( {userStatus, currentUser, setSkillChange} ) {
     return (
       <div className="profile-container">
         <div className="greeting-box">
-            <h2>{`Hello,`/* ${currentUser.name} */}</h2>
+            <h2>{`Hello, ${currentUser.name}`}</h2>
         </div>
         <div className="profile-content">
             <div className="user-details">

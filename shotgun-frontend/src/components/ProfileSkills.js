@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { makeStyles, ThemeProvider, createTheme } from '@material-ui/core/styles';
+import { makeStyles, createTheme } from '@material-ui/core/styles';
 
 const theme = createTheme({
     palette: {
@@ -66,7 +66,7 @@ function ProfileSkills({userStatus, currentUser, setSkillChange}) {
     }
 
     // console.log(skillId, skillName, skillLevel)
-    // console.log(userSkills)
+    console.log(userSkills)
     // patch to server - DONE!!
     const handleEditSave = (e) => {
         e.preventDefault()
@@ -83,13 +83,22 @@ function ProfileSkills({userStatus, currentUser, setSkillChange}) {
             },
             body: JSON.stringify(updated_skill)
         })
-        setUserSkills(userSkills.map(skill => {
-            if (skill.id === skillId) {
-                return updated_skill
-            } else {
-                return skill
-            }
-        }))
+        .then(res => res.json())
+        .then(data => 
+            {let skill_updated = data.patch_skill;
+            setUserSkills(userSkills.map(skill => {
+                if (skill.id === skill_updated.id) {
+                    return {
+                        id: skill_updated.id,
+                        profile_id: skill_updated.profile_id,
+                        name: skill_updated.name, 
+                        level: skill_updated.level
+                    }
+                } else {
+                    return skill
+                }
+            }))}
+        )
         setSkillView("view")
     }
     
