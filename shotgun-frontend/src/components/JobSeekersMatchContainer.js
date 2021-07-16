@@ -17,6 +17,10 @@ function JobSeekersMatchContainer({currentUser, eventArr}) {
       ))
   }
 
+  const onAllMatchingEventBtnClick = () => {
+    setEventListOnDisplay(currentUser.all_matching_events)
+  }
+
   const onSideBarItemClick = (matchingRecruiter) => {
     // console.log("matching_recruiterInMatchContainer",matchingRecruiter.id)
     //setSelectedRecruiterEvent true => show flitered arry
@@ -27,7 +31,12 @@ function JobSeekersMatchContainer({currentUser, eventArr}) {
   // console.log(eventListOnDisplay)
     return (
       <div className="JobSeekersMatchContainer">
-        <JobSeekersMatchFilter onSearchChange={onSearchChange}/>
+        <div className="greeting-box">
+          <h2>{`Hello, ${currentUser.name}`}</h2>
+        </div>
+        <JobSeekersMatchFilter onSearchChange={onSearchChange}
+                               onAllMatchingEventBtnClick={onAllMatchingEventBtnClick}
+        />
         <div className="match-page-container">
           <JobSeekersMatchSidebar currentUser={currentUser} 
                                   onSideBarItemClick={onSideBarItemClick}

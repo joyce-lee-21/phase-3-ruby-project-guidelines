@@ -5,7 +5,7 @@ import SignUpInstructions from "./SignUpInstructions"
 
 
 
-function SignUp({userStatus, setUserStatus, onJobSeekerSignUp, onRecruiterSignUp, currentUser}) {
+function SignUp({userStatus, setUserStatus, currentUser, setCurrentUser}) {
 
   
 
@@ -14,14 +14,14 @@ function SignUp({userStatus, setUserStatus, onJobSeekerSignUp, onRecruiterSignUp
 
       } else if (userStatus === "recruiter") {
         return <SignUpRecruiter setUserStatus={setUserStatus} 
-                                onRecruiterSignUp={onRecruiterSignUp}
                                 currentUser={currentUser}
+                                setCurrentUser={setCurrentUser}
                                 />;
 
     } else {
       return <SignUpJobSeeker setUserStatus={setUserStatus} 
-                              onJobSeekerSignUp={onJobSeekerSignUp}
                               currentUser={currentUser}
+                              setCurrentUser={setCurrentUser}
                               />;
 
     }

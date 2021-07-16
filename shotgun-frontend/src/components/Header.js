@@ -1,9 +1,10 @@
 import {NavLink} from 'react-router-dom';
 
-function Header( {currentUser, setCurrentUser} ) {
+function Header( {currentUser, setCurrentUser, setUserStatus} ) {
 
     const handleLogout = () => {
         setCurrentUser(null)
+        setUserStatus("none") 
     }
 
     return (

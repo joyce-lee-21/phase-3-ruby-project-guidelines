@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function SignUpRecruiter({setUserStatus, onRecruiterSignUp, currentUser}) {
+ function SignUpRecruiter({setUserStatus, currentUser, setCurrentUser}) {
   const classes = useStyles();
 
   const history= useHistory();
@@ -62,8 +62,20 @@ const useStyles = makeStyles((theme) => ({
 
   const handleRecruiterSignUp = (e) => {
     e.preventDefault();
-    onRecruiterSignUp(enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo)
-    currentUser ? history.push("/profile") : console.log("not yet signed up")
+    fetch("http://localhost:9393/recruiters", {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo 
+      })
+      })
+      .then(res => res.json())
+      .then(data => {
+        setCurrentUser(data)
+        setUserStatus("recruiter")
+        history.push("/profile")
+      })
   }
 
 
