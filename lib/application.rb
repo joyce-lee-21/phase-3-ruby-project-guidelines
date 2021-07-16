@@ -28,21 +28,30 @@ class Application
             # puts req.body
             posted_content = JSON.parse(req.body.read)
             puts posted_content
+            puts Recruiter.all.find_by(id: posted_content["recruiter_id"])
             new_event = Event.create(
-                                    recruiter_id: posted_content["id"], 
+                                    recruiter_id: posted_content["recruiter_id"],
+                                    name: posted_content["name"],
                                     event_date: DateTime.strptime(posted_content["event_date"], "%m/%d/%Y %H:%M"), 
                                     location: posted_content["location"], 
                                     description: posted_content["description"])
+            # Recruiter.all.find_by(id: posted_content["recruiter_id"]).add_event(new_event.id)
+
 
             return [200, { 'Content-Type' => 'application/json' }, [ {:new_event => new_event}.to_json ]]  
 
 
         elsif req.path.match(/events/) && req.delete?
             del_content = JSON.parse(req.body.read)
-            # Event.all.find{|event| event.id == del_content["id"]}.destroy
-            puts del_content
+            # deleted_event = Event.all.find{|event| event.id == del_content["event_id"]}.destroy
+            # puts del_content
 
-            return [200, { 'Content-Type' => 'application/json' }, [ {:del_event => del_content}.to_json ]]  
+            # parent_delete_event = if del_content["user_type"] == "recruiter" 
+            deleted_event = Recruiter.all.select{|recruiter| recruiter.delete_db_events(del_content["event_id"]).destroy}
+            # else JobSeeker.all.select{|recruiter| recruiter.events.find_by(id: del_content["event_id"]).destroy
+            # end
+
+            return [200, { 'Content-Type' => 'application/json' }, [ {:del_event => deleted_event}.to_json ]]  
 
 
         elsif req.path.match(/events/) && req.patch?
@@ -123,6 +132,7 @@ class Application
                  password: recruiter.password, 
                  email: recruiter.email,
                  logo: recruiter.logo,
+                 profile_id: recruiter.profile.id,
                  skills: recruiter.skills,
                  view_skills: recruiter.view_skills,
                  events: recruiter.events,
@@ -160,6 +170,7 @@ class Application
                     password: new_recruiter.password, 
                     email: new_recruiter.email,
                     logo:new_recruiter.logo,
+                    profile_id: new_recruiter.profile.id,
                     skills: new_recruiter.skills,
                     view_skills: new_recruiter.view_skills,
                     events: new_recruiter.events,
@@ -195,12 +206,12 @@ class Application
             #                         level: posted_content["level"], 
             #                         profile_id: posted_content["profile_id"]
             #                     )
-            # if posted_content["user_type"] == "recruiter" 
-            puts Recruiter.all.find_by(id: posted_content["user_id"]).add_skill(posted_content["name"], posted_content["level"])
-            # puts JobSeeker.all.find_by(id: posted_content["id"]).add_skill(posted_content["name"], posted_content["level"])
-            # end
+            new_skill = if posted_content["user_type"] == "recruiter" 
+                Recruiter.all.find_by(id: posted_content["user_id"]).add_skill(posted_content["name"], posted_content["level"])
+            else JobSeeker.all.find_by(id: posted_content["user_id"]).add_skill(posted_content["name"], posted_content["level"])
+            end
 
-            # return [200, { 'Content-Type' => 'application/json' }, [ {:new_skill => new_skill}.to_json ]]  
+            return [200, { 'Content-Type' => 'application/json' }, [ {:new_skill => new_skill}.to_json ]]  
 
 
         elsif req.path.match(/skills/) && req.delete?
