@@ -96,7 +96,7 @@ function EventsContainer( {userStatus, currentUser} ) {
     const handleEventAdd = () => {
         setEventView("add")
     }
-    // when a user clicks on save add - NEEDS DATETIME FORMATTING
+    // when a user clicks on save add - DONE!!
     const handleAddSave = (e) => {
         e.preventDefault()
         
