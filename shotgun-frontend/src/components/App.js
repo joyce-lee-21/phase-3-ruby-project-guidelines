@@ -29,6 +29,7 @@ function App() {
   const [skillChange, setSkillChange] = useState(false)
   const [eventArr, setEventArr] = useState([])
   
+  const history = useHistory();
 
   //fetch
   useEffect(()=>{
@@ -71,6 +72,7 @@ function App() {
       setUserStatus("jobseeker")
       console.log("isJobSeeker",isJobSeeker)
       setCurrentUser(isJobSeeker)
+
     } else {
       alert("Incorrect username or password, please re-enter.");
     }

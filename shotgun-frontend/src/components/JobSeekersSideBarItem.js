@@ -8,8 +8,8 @@ function JobSeekersSideBarItem({matchingRecruiter, onSideBarItemClick}) {
     return (
       <div className="job-seekers-side-bar-item">
         <li onClick={handleSideBarItemClick}>
-            <img src={matchingRecruiter.logo} alt={matchingRecruiter.company_name} />
-            <h2>{matchingRecruiter.companyName}</h2>
+            <img src={matchingRecruiter.logo} alt={matchingRecruiter.company_name} className="side-bar-logo"/>
+            <h2>{matchingRecruiter.company_name}</h2>
             <p>{matchingRecruiter.name}</p>
             <p>{matchingRecruiter.email}</p>
             <p>{matchingRecruiter.location}</p>

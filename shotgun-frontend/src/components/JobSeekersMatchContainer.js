@@ -7,7 +7,15 @@ function JobSeekersMatchContainer({currentUser, eventArr}) {
 
   const [eventListOnDisplay, setEventListOnDisplay] = useState(currentUser.all_matching_events)
 
-  // console.log("eventArrInContainer",eventArr)
+  const onSearchChange=(input) => {
+    console.log(input)
+    setEventListOnDisplay(eventArr.filter(e=> 
+      e.description.toLocaleLowerCase().includes(input.toLocaleLowerCase()) || 
+      e.event_date.toLocaleLowerCase().includes(input.toLocaleLowerCase()) || 
+      e.location.toLocaleLowerCase().includes(input.toLocaleLowerCase()) ||
+      e.name.toLocaleLowerCase().includes(input.toLocaleLowerCase())
+      ))
+  }
 
   const onSideBarItemClick = (matchingRecruiter) => {
     // console.log("matching_recruiterInMatchContainer",matchingRecruiter.id)
@@ -19,14 +27,15 @@ function JobSeekersMatchContainer({currentUser, eventArr}) {
   // console.log(eventListOnDisplay)
     return (
       <div className="JobSeekersMatchContainer">
-       <h1>JobSeekers Match Container!</h1>
-        <JobSeekersMatchFilter />
-        <JobSeekersMatchSidebar currentUser={currentUser} 
-                                onSideBarItemClick={onSideBarItemClick}
-                                
-                                />
-        <JobSeekersMatchEventList eventListOnDisplay={eventListOnDisplay}
-        />
+        <JobSeekersMatchFilter onSearchChange={onSearchChange}/>
+        <div className="match-page-container">
+          <JobSeekersMatchSidebar currentUser={currentUser} 
+                                  onSideBarItemClick={onSideBarItemClick}
+                                  
+                                  />
+          <JobSeekersMatchEventList eventListOnDisplay={eventListOnDisplay}
+          />
+        </div>
       </div>
     );
   }
