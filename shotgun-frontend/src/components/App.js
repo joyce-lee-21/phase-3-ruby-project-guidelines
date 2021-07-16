@@ -5,7 +5,6 @@ import {
   Switch, 
   Route
 } from "react-router-dom";
-import {useHistory} from 'react-router'
 import React, { useState, useEffect } from "react";
 
 import SignUp from './SignUp';
@@ -28,8 +27,7 @@ function App() {
   const [jobseekerArr, setJobseekerArr] = useState([])
   const [skillChange, setSkillChange] = useState(false)
   const [eventArr, setEventArr] = useState([])
-  
-  const history = useHistory();
+
 
   //fetch
   useEffect(()=>{
@@ -142,7 +140,7 @@ function App() {
                     />
           </Route>
           <Route path="/login">
-            <Login onLoginSubmit={onLoginSubmit} currentUser={currentUser}/>
+            <Login onLoginSubmit={onLoginSubmit} currentUser={currentUser} setCurrentUser={setCurrentUser} setUserStatus={setUserStatus} jobseekerArr={jobseekerArr} recruiterArr={recruiterArr}/>
           </Route>
           <Route path="/matches">
             {userStatus === "recruiter" ? 

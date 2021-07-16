@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function Login({onLoginSubmit, currentUser}) {
+ function Login({onLoginSubmit, currentUser, setCurrentUser, setUserStatus, jobseekerArr, recruiterArr}) {
   const classes = useStyles();
 
   const history = useHistory();
@@ -58,11 +58,33 @@ const useStyles = makeStyles((theme) => ({
   const [enterLoginUsername, setEnterLoginUsername] = useState("")
   const [enterLoginPD, setEnterLoginPD] = useState("")
 
+  
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    onLoginSubmit(enterLoginUsername, enterLoginPD)
-    currentUser ? history.push("/matches") : console.log("incorrect login")
+    // onLoginSubmit(enterLoginUsername, enterLoginPD)
+    const isRecruiter = recruiterArr.find(r => r.username === enterLoginUsername && r.password === enterLoginPD) 
+    const isJobSeeker = jobseekerArr.find(j => j.username === enterLoginUsername && j.password === enterLoginPD) 
+    console.log(isRecruiter, isJobSeeker)
+    
+    if (isRecruiter) {
+      //set userStatus
+      setUserStatus("recruiter")
+      //set currentUser
+      setCurrentUser(isRecruiter)
+      // console.log("currentUserInAppWhenRecruiterLogin", currentUser, "isRecruiter", isRecruiter)
+    } else if (isJobSeeker) {
+      setUserStatus("jobseeker")
+      // console.log("isJobSeeker",isJobSeeker)
+      setCurrentUser(isJobSeeker)
+    } else {
+      alert("Incorrect username or password, please re-enter.");
+    }
+    isJobSeeker || isRecruiter ? history.push("/matches") : console.log("incorrect login")
   }
+  console.log(currentUser)
+  // const redirectLogin = async () => {
+    
+  // }
 
   return (
     <ThemeProvider theme={theme}>
@@ -102,15 +124,17 @@ const useStyles = makeStyles((theme) => ({
               onChange={(e)=>{setEnterLoginPD(e.target.value)}}
               value={enterLoginPD}
             />
-            <Button 
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Login
-            </Button>
+            {/* <Link to="/matches" style={{color: 'inherit', textDecoration: 'none'}}> */}
+              <Button 
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Login
+              </Button>
+            {/* </Link> */}
             <Grid container>
               <Grid item>
                 <Link href="/signup" variant="body2">

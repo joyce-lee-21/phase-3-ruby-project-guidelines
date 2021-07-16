@@ -107,13 +107,14 @@ function ProfileSkills({userStatus, currentUser, setSkillChange}) {
     }
     // form view + patch to server - DONE!!
     const handleAddSave = (e) => {
-        e.preventDefault()
-        
-        let new_skill = {
-            name: skillName, 
-            level: skillLevel,
-            profile_id: currentUser.skills[0].profile_id
-        }
+        e.preventDefault()  
+            let new_skill = {
+                name: skillName, 
+                level: skillLevel,
+                profile_id: currentUser.profile_id,
+                user_type: userStatus,
+                user_id: currentUser.id
+            }
 
         fetch("http://localhost:9393/skills", {
             method: "POST",
