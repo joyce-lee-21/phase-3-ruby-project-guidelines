@@ -5,7 +5,6 @@ function JobSeekersMatchEventList({eventListOnDisplay}) {
   return (
     <div className="match-event-list">
       {
-
         eventListOnDisplay.map(matchingEvent => 
         <JobSeekersEventItem key={matchingEvent.id}
                              matchingEvent={matchingEvent}

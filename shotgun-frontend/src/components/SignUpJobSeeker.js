@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function SignUpJobSeeker({setUserStatus, onJobSeekerSignUp, currentUser}) {
+ function SignUpJobSeeker({setUserStatus, currentUser, setCurrentUser}) {
   const classes = useStyles();
 
   const history= useHistory();
@@ -62,8 +62,21 @@ const useStyles = makeStyles((theme) => ({
 
   const handleJobSeekerSignUp = (e) => {
     e.preventDefault();
-    onJobSeekerSignUp(enterSignUpName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpImage)
-    currentUser ? console.log("account exists, login") : console.log("not yet signed up")
+    fetch("http://localhost:9393/jobseekers", {
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify({enterSignUpName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpImage
+    })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setCurrentUser(data)
+      setUserStatus("jobseeker")
+      history.push("/profile")
+    })
+
   }
 
   return (
