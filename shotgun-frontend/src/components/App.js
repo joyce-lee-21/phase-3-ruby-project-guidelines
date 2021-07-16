@@ -54,62 +54,6 @@ function App() {
 
 
 
-  //Login submit on Login.js
-  const onLoginSubmit = (enterLoginUsername, enterLoginPD) =>{
-    console.log(enterLoginUsername, enterLoginPD)
-    //verify 
-    const isRecruiter = recruiterArr.find(r => r.username === enterLoginUsername && r.password === enterLoginPD) 
-    const isJobSeeker = jobseekerArr.find(j => j.username === enterLoginUsername && j.password === enterLoginPD) 
-    // console.log(isRecruiter, isJobSeeker)
-    if (isRecruiter) {
-      //set userStatus
-      setUserStatus("recruiter")
-      //set currentUser
-      setCurrentUser(isRecruiter)
-      console.log("currentUserInAppWhenRecruiterLogin", currentUser, "isRecruiter", isRecruiter)
-    } else if (isJobSeeker) {
-      setUserStatus("jobseeker")
-      console.log("isJobSeeker",isJobSeeker)
-      setCurrentUser(isJobSeeker)
-
-    } else {
-      alert("Incorrect username or password, please re-enter.");
-    }
-  }
-
-  //signup on SignUpJobSeeker.js
-  const onJobSeekerSignUp = (enterSignUpName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpImage) => {
-    // POST
-    // console.log(enterSignUpName, enterSignUpLocation, enterSignUpUsername,  enterSignUpPD, enterSignUpEmail, enterSignUpImage)
-    fetch("http://localhost:9393/jobseekers", {
-    method: 'POST',
-    headers:{
-      'Content-Type': 'application/json'
-    },
-    body:JSON.stringify({enterSignUpName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpImage
-    })
-    })
-    .then(res => res.json())
-    .then(data => setCurrentUser(data))
-    .then(setUserStatus("jobseeker"))
-
-  }
-
-  const onRecruiterSignUp = (enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo) => {
-    console.log(enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo)
-    fetch("http://localhost:9393/recruiters", {
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo 
-      })
-      })
-      .then(res => res.json())
-      .then(data => setCurrentUser(data))
-      .then(setUserStatus("recruiter"))
-  }
-
   const onHeaderButtonClick = () => {
       setCurrentUser(null)
   }
@@ -133,6 +77,7 @@ function App() {
       <Router>
         {/* <button onClick={history.push("/")}>yo</button> */}
         <Header currentUser={currentUser}
+                setUserStatus={setUserStatus}
                 setCurrentUser={onHeaderButtonClick}/>
         <Switch>
           <Route exact path="/">
@@ -141,13 +86,12 @@ function App() {
           <Route path="/signup">
             <SignUp userStatus={userStatus} 
                     setUserStatus={setUserStatus} 
-                    onJobSeekerSignUp={onJobSeekerSignUp}
-                    onRecruiterSignUp={onRecruiterSignUp}
                     currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
                     />
           </Route>
           <Route path="/login">
-            <Login onLoginSubmit={onLoginSubmit} currentUser={currentUser} setCurrentUser={setCurrentUser} setUserStatus={setUserStatus} jobseekerArr={jobseekerArr} recruiterArr={recruiterArr}/>
+            <Login currentUser={currentUser} setCurrentUser={setCurrentUser} setUserStatus={setUserStatus} jobseekerArr={jobseekerArr} recruiterArr={recruiterArr}/>
           </Route>
           <Route path="/matches">
             {userStatus === "recruiter" ? 

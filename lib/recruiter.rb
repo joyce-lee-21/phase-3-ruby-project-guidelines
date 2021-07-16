@@ -75,6 +75,10 @@ class Recruiter < ActiveRecord::Base
         }
     end
 
+    # def all_matching_job_seeker_skills
+    #     self.all_matching_job_seekers.map{|matching_job_seeker| matching_job_seeker.skills}
+    # end
+
     def all_matching_job_seeker_names
         self.all_matching_job_seekers.map{|matching_job_seeker| matching_job_seeker.name}
     end

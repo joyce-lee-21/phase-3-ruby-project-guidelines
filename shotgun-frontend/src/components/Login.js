@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function Login({onLoginSubmit, currentUser, setCurrentUser, setUserStatus, jobseekerArr, recruiterArr}) {
+ function Login({currentUser, setCurrentUser, setUserStatus, jobseekerArr, recruiterArr}) {
   const classes = useStyles();
 
   const history = useHistory();
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
   
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    // onLoginSubmit(enterLoginUsername, enterLoginPD)
     const isRecruiter = recruiterArr.find(r => r.username === enterLoginUsername && r.password === enterLoginPD) 
     const isJobSeeker = jobseekerArr.find(j => j.username === enterLoginUsername && j.password === enterLoginPD) 
     console.log(isRecruiter, isJobSeeker)

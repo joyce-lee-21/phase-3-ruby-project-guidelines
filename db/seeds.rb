@@ -25,11 +25,11 @@ Recruiter.create(name: "Ali", company_name: "NASA", location: "Houston, TX", use
 
 puts "Seeding job seekers..."
 JobSeeker.create(name: "Suey", location: "Seattle, WA", username: "suey", password: "123", email: "suey@gmail.com", image: "https://i.pinimg.com/originals/ec/a0/b7/eca0b73553fb07e9393c14c9a67899cb.jpg")
-JobSeeker.create(name: "Joyce", location: "New York, NY", username: "joyce", password: "123", email: "joyce@microsoft.com", image: "https://i.pinimg.com/474x/e7/fb/a0/e7fba022757e23074952d1f75910ab4d.jpg")
-JobSeeker.create(name: "Joe", location: "Seattle, WA", username: "alex", password: "123", email: "alex@microsoft.com", image: "https://i.pinimg.com/474x/49/e6/8c/49e68cb083f221f877cb8c54df4c2284.jpg")
-JobSeeker.create(name: "Anna", location: "Los Angeles, CA", username: "brianna", password: "123", email: "brianna@microsoft.com", image: "https://up.quizlet.com/5hmda-sSqCH-256s.jpg")
-JobSeeker.create(name: "Matt", location: "Houston, TX", username: "angelo", password: "123", email: "angelo@microsoft.com", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQosI4z983JAb5qW1c9LRfCHYTnRj4V7-OiWg&usqp=CAU")
-JobSeeker.create(name: "Jay", location: "San Francisco, CA", username: "seanb", password: "123", email: "seanb@microsoft.com", image: "https://up.quizlet.com/bq6l2-FW9GY-256s.png")
+JobSeeker.create(name: "Joyce", location: "New York, NY", username: "joyce", password: "123", email: "joyce@gmail.com", image: "https://i.pinimg.com/474x/e7/fb/a0/e7fba022757e23074952d1f75910ab4d.jpg")
+JobSeeker.create(name: "Joe", location: "Seattle, WA", username: "alex", password: "123", email: "joy@gmail.com", image: "https://i.pinimg.com/474x/49/e6/8c/49e68cb083f221f877cb8c54df4c2284.jpg")
+JobSeeker.create(name: "Anna", location: "Los Angeles, CA", username: "brianna", password: "123", email: "anna@gmail.com", image: "https://up.quizlet.com/5hmda-sSqCH-256s.jpg")
+JobSeeker.create(name: "Matt", location: "Houston, TX", username: "angelo", password: "123", email: "matt@gmail.com", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQosI4z983JAb5qW1c9LRfCHYTnRj4V7-OiWg&usqp=CAU")
+JobSeeker.create(name: "Jay", location: "San Francisco, CA", username: "seanb", password: "123", email: "joy@gmail.com", image: "https://up.quizlet.com/bq6l2-FW9GY-256s.png")
 
 puts "Seeding profiles..."
 Profile.create(user_id: Recruiter.all[0].id, user_type: "Recruiter")
