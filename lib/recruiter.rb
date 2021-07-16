@@ -29,6 +29,10 @@ class Recruiter < ActiveRecord::Base
         self.events.find_by(description: event).destroy
     end
 
+    def delete_db_events(event_id)
+        self.events.find_by(id: event_id).destroy
+    end
+
     def add_event(name, event_date, location, description, image)
         Event.create(recruiter_id: self.id, name: name, event_date: DateTime.strptime(event_date, "%m/%d/%Y %H:%M"), location: location, description: description, image: image)
     end

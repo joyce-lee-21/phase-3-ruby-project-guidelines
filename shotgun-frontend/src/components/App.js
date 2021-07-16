@@ -27,6 +27,7 @@ function App() {
   const [jobseekerArr, setJobseekerArr] = useState([])
   const [skillChange, setSkillChange] = useState(false)
   const [eventArr, setEventArr] = useState([])
+  const [pageChange, setPageChange] = useState(false)
 
 
   //fetch
@@ -113,10 +114,16 @@ function App() {
       setCurrentUser(null)
   }
 
+  const onUserEventsUpdate = (bool) => {
+    if (bool) {
+      setPageChange(true)
+    }
+  }
+
   const onSkillChange = (bool) => {
     // console.log(bool)
     if (bool) {
-      setCurrentUser(currentUser) 
+      setPageChange(true) 
     }
   }
 
@@ -160,7 +167,8 @@ function App() {
             <EventsContainer userStatus={userStatus}
                               currentUser={currentUser}
                               recruiterArr={recruiterArr}
-                              jobseekerArr={jobseekerArr}/>
+                              jobseekerArr={jobseekerArr}
+                              updateUserEvents={onUserEventsUpdate}/>
           </Route>
         </Switch>
       </Router>

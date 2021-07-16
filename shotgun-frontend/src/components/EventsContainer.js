@@ -1,5 +1,5 @@
 import EventsList from './EventsList';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, createTheme } from '@material-ui/core/styles';
 
@@ -45,7 +45,13 @@ function EventsContainer( {userStatus, currentUser} ) {
 
     const classes = useStyles();
 
-    
+    useEffect(()=>{
+        fetch("http://localhost:9393/events")
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error))
+      },[])
+
     // when a user clicks on edit - DONE!!
     const handleEventEdit = (id, name, date, location, desc) => {
         // console.log(id, name, date, location, desc)
@@ -116,11 +122,14 @@ function EventsContainer( {userStatus, currentUser} ) {
             },
             body: JSON.stringify(new_event)
         })
-        .then(data => console.log(data))
-
-        setUserEvents([...userEvents, new_event])
-        setEventView("view")
+        .then(res => res.json())
+        .then(data => {
+            setUserEvents([...userEvents, data.new_event])
+            setEventView("view")
+            console.log([...userEvents, data.new_event])
+        })
     }
+    console.log(userEvents)
 
     // when a user clicks on delete - DONE!!
     const handleEventDelete = (event_id) => {
@@ -130,9 +139,13 @@ function EventsContainer( {userStatus, currentUser} ) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                id: event_id
+                user_type: userStatus,
+                user_id: currentUser.profile_id,
+                event_id: event_id
             })
         })
+        .then(res => res.json())
+        .then(data => console.log(`Deleted, data: ${data}`))
         setUserEvents(userEvents.filter(event => event.id !== event_id))
     }
 
@@ -142,151 +155,181 @@ function EventsContainer( {userStatus, currentUser} ) {
             <h2>{`Hello, ${currentUser.name}`}</h2>
         </div>
         <div className="events-content">
-        {/* Event List starts */}
-            
-            <>
-        {/* if view is view */}
-        {eventView === "view"
-        ? <div className="event-list">
-            <h2>Event List</h2>
-            {userEvents.map((event) =>
-            // {const timestamp = event.event_date; 
+            {/* Event List starts */}
+            {userStatus === "recruiter"
+                // if userStatus is Recruiter
+                ? <>
+                    {/* if view is view */}
+                        {eventView === "view"
+                        ? <div className="event-list">
+                            <h2>Event List</h2>
+                            {userEvents.map((event) =>
+                            // {const timestamp = event.event_date; 
 
-            // console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(timestamp));
-                (<div className="event-item-container">
-                    <span className="event-item-details">
-                        <h4>Name:</h4>
-                        <p>{event.name}</p>
-                    </span>
-                    <span className="event-item-details">
-                        <h4>Location:</h4>
-                        <p>{event.location}</p>
-                    </span>
-                    <span className="event-item-details">
-                        <h4>Date:</h4>
-                        <p>{event.event_date}</p>
-                    </span>
-                    <span className="event-item-details">
-                        <h4>Description:</h4>
-                        {/* {console.log(event.description)} */}
-                        <p>{event.description}</p>
-                    </span>
-                    <span className="event-buttons">
-                        <button className="edit-event" onClick={() => handleEventEdit(event.id, event.name, event.event_date, event.location, event.description)}>Edit</button>
-                        <button className="remove-event" onClick={() => handleEventDelete(event.id)}>Remove</button>
-                    </span>
-                </div>)
-            // }
-            )}
-            <button className="add-event" onClick={() => handleEventAdd()}>Add New Event</button>
-        </div>
-        : eventView === "add"
-        // if view is add
-            ? <div className="event-add-form">
-                {/* form here */}
-                    <form className={classes.form} noValidate onSubmit={handleAddSave}>
-                        <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="name"
-                        label="Event Name: "
-                        name="name"
-                        autoFocus
-                        onChange={(e)=>{setEventName(e.target.value)}}
-                        />
-                        <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="Date"
-                        label="Event Date (MM-DD-YYYY HH:MM)"
-                        id="date"
-                        onChange={(e)=>{setEventDate(e.target.value)}}
-                        />
-                        <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="Location"
-                        label="Event Location: "
-                        id="location"
-                        onChange={(e)=>{setEventLocation(e.target.value)}}
-                        />
-                        <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="desc"
-                        label="Event Description: "
-                        id="desc"
-                        onChange={(e)=>{setEventDesc(e.target.value)}}
-                        />
-                        <button className="add-save-skill">Add Event</button>
-                    </form>
-            </div>
-            // if view is edit
-            : <div className="event-edit">
-                {/* form here */}
-                <form className={classes.form} noValidate onSubmit={handleEditSave}>
-                    <h4>{`Editing: ${eventName}`}</h4>
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Event Name"
-                    name="name"
-                    autoFocus
-                    onChange={(e)=>{setEventName(e.target.value)}}
-                    value={eventName}
-                    />
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="date"
-                    label="Event Date"
-                    name="date"
-                    autoFocus
-                    onChange={(e)=>{setEventDate(e.target.value)}}
-                    value={eventDate}
-                    />
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="location"
-                    label="Event Location"
-                    name="location"
-                    autoFocus
-                    onChange={(e)=>{setEventLocation(e.target.value)}}
-                    value={eventLocation}
-                    />
-                    <TextField
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="desc"
-                    label="Event Description"
-                    name="desc"
-                    autoFocus
-                    onChange={(e)=>{setEventDesc(e.target.value)}}
-                    value={eventDesc}
-                    />
-                    <button className="edit-save-skill">Save Edit</button>
-                </form>
-            </div>
-        }
-        </>
+                            // console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(timestamp));
+                                (<div className="event-item-container">
+                                    <span className="event-item-details">
+                                        <h4>Name:</h4>
+                                        <p>{event.name}</p>
+                                    </span>
+                                    <span className="event-item-details">
+                                        <h4>Location:</h4>
+                                        <p>{event.location}</p>
+                                    </span>
+                                    <span className="event-item-details">
+                                        <h4>Date:</h4>
+                                        <p>{event.event_date}</p>
+                                    </span>
+                                    <span className="event-item-details">
+                                        <h4>Description:</h4>
+                                        {/* {console.log(event.description)} */}
+                                        <p>{event.description}</p>
+                                    </span>
+                                    <span className="event-buttons">
+                                        <button className="edit-event" onClick={() => handleEventEdit(event.id, event.name, event.event_date, event.location, event.description)}>Edit</button>
+                                        <button className="remove-event" onClick={() => handleEventDelete(event.id)}>Remove</button>
+                                    </span>
+                                </div>)
+                            // }
+                            )}
+                            <button className="add-event" onClick={() => handleEventAdd()}>Add New Event</button>
+                        </div>
+                        : eventView === "add"
+                        // if view is add
+                            ? <div className="event-add-form">
+                                {/* form here */}
+                                    <form className={classes.form} noValidate onSubmit={handleAddSave}>
+                                        <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="name"
+                                        label="Event Name: "
+                                        name="name"
+                                        autoFocus
+                                        onChange={(e)=>{setEventName(e.target.value)}}
+                                        />
+                                        <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="Date"
+                                        label="Event Date (MM/DD/YYYY HH:MM)"
+                                        id="date"
+                                        onChange={(e)=>{setEventDate(e.target.value)}}
+                                        />
+                                        <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="Location"
+                                        label="Event Location: "
+                                        id="location"
+                                        onChange={(e)=>{setEventLocation(e.target.value)}}
+                                        />
+                                        <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        name="desc"
+                                        label="Event Description: "
+                                        id="desc"
+                                        onChange={(e)=>{setEventDesc(e.target.value)}}
+                                        />
+                                        <button className="add-save-skill">Add Event</button>
+                                    </form>
+                            </div>
+                            // if view is edit
+                            : <div className="event-edit">
+                                {/* form here */}
+                                <form className={classes.form} noValidate onSubmit={handleEditSave}>
+                                    <h4>{`Editing: ${eventName}`}</h4>
+                                    <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="name"
+                                    label="Event Name"
+                                    name="name"
+                                    autoFocus
+                                    onChange={(e)=>{setEventName(e.target.value)}}
+                                    value={eventName}
+                                    />
+                                    <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="date"
+                                    label="Event Date"
+                                    name="date"
+                                    autoFocus
+                                    onChange={(e)=>{setEventDate(e.target.value)}}
+                                    value={eventDate}
+                                    />
+                                    <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="location"
+                                    label="Event Location"
+                                    name="location"
+                                    autoFocus
+                                    onChange={(e)=>{setEventLocation(e.target.value)}}
+                                    value={eventLocation}
+                                    />
+                                    <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="desc"
+                                    label="Event Description"
+                                    name="desc"
+                                    autoFocus
+                                    onChange={(e)=>{setEventDesc(e.target.value)}}
+                                    value={eventDesc}
+                                    />
+                                    <button className="edit-save-skill">Save Edit</button>
+                                </form>
+                            </div>
+                        }
+                </>
+                // if userStatus is Job Seeker
+                : <div className="event-list">
+                    <h2>Event List</h2>
+                        {userEvents.map((event) =>
+                            (<div className="event-item-container">
+                                <span className="event-item-details">
+                                    <h4>Name:</h4>
+                                    <p>{event.name}</p>
+                                </span>
+                                <span className="event-item-details">
+                                    <h4>Location:</h4>
+                                    <p>{event.location}</p>
+                                </span>
+                                <span className="event-item-details">
+                                    <h4>Date:</h4>
+                                    <p>{event.event_date}</p>
+                                </span>
+                                <span className="event-item-details">
+                                    <h4>Description:</h4>
+                                    {/* {console.log(event.description)} */}
+                                    <p>{event.description}</p>
+                                </span>
+                                <span className="event-buttons">
+                                    <button className="remove-event" onClick={() => handleEventDelete(event.id)}>Remove</button>
+                                </span>
+                            </div>)
+                        )}
+                </div>
+            }
         </div>
       </div>
     );
