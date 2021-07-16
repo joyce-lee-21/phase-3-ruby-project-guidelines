@@ -19,6 +19,8 @@ import Container from '@material-ui/core/Container';
 
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 
+import { useHistory } from 'react-router-dom';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -48,8 +50,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function Login({onLoginSubmit}) {
+ function Login({onLoginSubmit, currentUser}) {
   const classes = useStyles();
+
+  const history = useHistory();
 
   const [enterLoginUsername, setEnterLoginUsername] = useState("")
   const [enterLoginPD, setEnterLoginPD] = useState("")
@@ -57,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     onLoginSubmit(enterLoginUsername, enterLoginPD)
+    currentUser ? history.push("/matches") : console.log("incorrect login")
   }
 
   return (

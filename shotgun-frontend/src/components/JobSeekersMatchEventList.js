@@ -1,10 +1,12 @@
 import JobSeekersEventItem from "./JobSeekersMatchEventItem";
 
-function JobSeekersMatchEventList({currentUser}) {
-  console.log("currentUserInMatchEventList", currentUser.all_matching_events)
+function JobSeekersMatchEventList({eventListOnDisplay}) {
+  // console.log("eventListOnDisplay:",eventListOnDisplay)
   return (
     <div>
-      {currentUser.all_matching_events.map(matchingEvent => 
+      {
+
+        eventListOnDisplay.map(matchingEvent => 
         <JobSeekersEventItem key={matchingEvent.id}
                              matchingEvent={matchingEvent}
         />)

@@ -1,10 +1,11 @@
 import JobSeekersSideBarList from "./JobSeekersSideBarList";
 
-function JobSeekersMatchSidebar({currentUser}) {
+function JobSeekersMatchSidebar({currentUser, onSideBarItemClick}) {
     return (
       <div className="JobSeekersMatchSidebar">
        <h1>JobSeekers Match Sidebar!</h1>
-       <JobSeekersSideBarList currentUser={currentUser}/>
+       <JobSeekersSideBarList currentUser={currentUser} 
+                              onSideBarItemClick={onSideBarItemClick}/>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router-dom';
 
-function Header( {currentUser, setCurrentUser} ) {
 
+function Header( {currentUser, setCurrentUser} ) {
 
     const handleClick = () => {
         setCurrentUser(null)
@@ -30,7 +30,7 @@ function Header( {currentUser, setCurrentUser} ) {
 
                     <div className="header-right">
                         <NavLink exact to="/" style={{ textDecoration: 'none' }}>
-                            <button className="logout">Logout</button>
+                            <button className="logout" onClick={setCurrentUser(null)}>Logout</button>
                         </NavLink>
                     </div>
                 </>
