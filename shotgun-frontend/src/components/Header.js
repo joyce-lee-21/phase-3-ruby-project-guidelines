@@ -2,7 +2,7 @@ import {NavLink} from 'react-router-dom';
 
 function Header( {currentUser, setCurrentUser} ) {
 
-    const handleLogout = () => {
+    const handleClick = () => {
         setCurrentUser(null)
     }
 

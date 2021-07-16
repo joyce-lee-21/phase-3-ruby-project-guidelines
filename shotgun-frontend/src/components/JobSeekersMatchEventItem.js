@@ -1,5 +1,5 @@
 function JobSeekersMatchEventItem({matchingEvent}) {
-    console.log(matchingEvent)
+    // console.log(matchingEvent)
     return (
       <div className="job-seekers-match-event-item">
         <li >

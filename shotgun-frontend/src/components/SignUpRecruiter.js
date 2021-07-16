@@ -3,6 +3,7 @@
 //npm install @material-ui/icons
 
 import React,{useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -46,8 +47,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function SignUpRecruiter({setUserStatus, onRecruiterSignUp}) {
+ function SignUpRecruiter({setUserStatus, onRecruiterSignUp, currentUser}) {
   const classes = useStyles();
+
+  const history= useHistory();
 
   const [enterSignUpUsername, setEnterSignUpUsername] = useState("")
   const [enterSignUpEmail, setEnterSignUpEmail] = useState("")
@@ -55,10 +58,12 @@ const useStyles = makeStyles((theme) => ({
   const [enterSignUpCompanyName, setEnterSignUpCompanyName] = useState("")
   const [enterSignUpLocation, setEnterSignUpLocation] = useState("")
   const [enterSignUpPD, setEnterSignUpPD] = useState("")
+  const [enterSignUpLogo, setEnterSignUpLogo] = useState("")
 
   const handleRecruiterSignUp = (e) => {
     e.preventDefault();
-    onRecruiterSignUp(enterSignUpUsername, enterSignUpEmail, enterSignUpName, enterSignUpCompanyName, enterSignUpLocation, enterSignUpPD)
+    onRecruiterSignUp(enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo)
+    currentUser ? history.push("/profile") : console.log("not yet signed up")
   }
 
 
@@ -138,7 +143,21 @@ const useStyles = makeStyles((theme) => ({
               autoFocus
               onChange={(e)=>{setEnterSignUpLocation(e.target.value)}}
               value={enterSignUpLocation}
-            />               
+            />
+              <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="logo"
+              label="Logo Url"
+              name="logo"
+              autoComplete="logo"
+              autoFocus
+              onChange={(e)=>{setEnterSignUpLogo(e.target.value)}}
+              value={enterSignUpLogo} 
+            />
+                   
             <TextField
               variant="outlined"
               margin="normal"
@@ -159,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
               color="primary"
               className={classes.submit}
             >
-              Login
+              Sign Up
             </Button>
             <Grid container>
               <Grid item xs>

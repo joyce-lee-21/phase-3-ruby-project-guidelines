@@ -1,13 +1,18 @@
-function JobSeekersSideBarItem({logo, companyName, name, email, location}) {
-    // console.log(image, companyName, name, email, location)
+function JobSeekersSideBarItem({matchingRecruiter, onSideBarItemClick}) {
+    const handleSideBarItemClick = () => {
+      onSideBarItemClick(matchingRecruiter)
+    }
+
+
+
     return (
       <div className="job-seekers-side-bar-item">
-        <li >
-            <img src={logo} alt={companyName} />
-            <h2>{companyName}</h2>
-            <p>{name}</p>
-            <p>{email}</p>
-            <p>{location}</p>
+        <li onClick={handleSideBarItemClick}>
+            <img src={matchingRecruiter.logo} alt={matchingRecruiter.company_name} />
+            <h2>{matchingRecruiter.companyName}</h2>
+            <p>{matchingRecruiter.name}</p>
+            <p>{matchingRecruiter.email}</p>
+            <p>{matchingRecruiter.location}</p>
         </li>
       </div>
     );
