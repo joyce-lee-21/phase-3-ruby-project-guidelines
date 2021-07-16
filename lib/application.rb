@@ -19,8 +19,39 @@ class Application
             end
 
             # return the objects into json objects; {:events} = what is going to appear in browser, can be named whatever
-            return [200, { 'Content-Type' => 'application/json' }, [ events.to_json ]]   
+            return [200, { 'Content-Type' => 'application/json' }, [ events.to_json ]]    
+ 
 
+
+        elsif req.path.match(/events/) && req.post?
+            # req.name
+            # puts req.body
+            posted_content = JSON.parse(req.body.read)
+            puts posted_content
+            new_event = Event.create(
+                                    recruiter_id: posted_content["id"], 
+                                    event_date: DateTime.strptime(posted_content["event_date"], "%m/%d/%Y %H:%M"), 
+                                    location: posted_content["location"], 
+                                    description: posted_content["description"])
+
+            return [200, { 'Content-Type' => 'application/json' }, [ {:new_event => new_event}.to_json ]]  
+
+
+        elsif req.path.match(/events/) && req.delete?
+            del_content = JSON.parse(req.body.read)
+            # Event.all.find{|event| event.id == del_content["id"]}.destroy
+            puts del_content
+
+            return [200, { 'Content-Type' => 'application/json' }, [ {:del_event => del_content}.to_json ]]  
+
+
+        elsif req.path.match(/events/) && req.patch?
+            patch_content = JSON.parse(req.body.read)
+            puts patch_content
+###########################add patch method  patch_event = 
+
+            return [200, { 'Content-Type' => 'application/json' }, [ {:patch_event => patch_event}.to_json ]] 
+            
 
         elsif req.path.match(/jobseekers/) && req.get?
             jobseekers = JobSeeker.all.map do |job_seeker|
@@ -41,75 +72,7 @@ class Application
                 }
             end
 
-            return [200, { 'Content-Type' => 'application/json' }, [ jobseekers.to_json ]]   
-
-
-        elsif req.path.match(/recruiters/) && req.get?
-            recruiters = Recruiter.all.map do |recruiter|
-                {id: recruiter.id, 
-                 name: recruiter.name, 
-                 location: recruiter.location, 
-                 company_name: recruiter.company_name,
-                 username: recruiter.username, 
-                 password: recruiter.password, 
-                 email: recruiter.email,
-                 logo: recruiter.logo,
-                 skills: recruiter.skills,
-                 view_skills: recruiter.view_skills,
-                 events: recruiter.events,
-                 view_events: recruiter.view_events,
-                 job_seekers: recruiter.job_seekers,
-                 all_matching_job_seekers: recruiter.all_matching_job_seekers
-                }
-            end
-
-            return [200, { 'Content-Type' => 'application/json' }, [ recruiters.to_json ]]  
-
-
-        elsif req.path.match(/skills/) && req.get?
-            skills = Skill.all.map do |skill|
-                {id: skill.id, 
-                 name: skill.name, 
-                 profile_id: skill.profile_id,
-                 level: skill.level,
-                 user_type: skill.profile.user_type,
-                 skill_owner: skill.profile.user
-                }
-            end
-
-            return [200, { 'Content-Type' => 'application/json' }, [ skills.to_json ]]  
-
-
-
-        elsif req.path.match(/events/) && req.post?
-            # req.name
-            # puts req.body
-            posted_content = JSON.parse(req.body.read)
-            puts posted_content
-            new_event = Event.create(
-                                    recruiter_id: posted_content["id"], 
-                                    event_date: DateTime.strptime(posted_content["event_date"], "%m/%d/%Y %H:%M"), 
-                                    location: posted_content["location"], 
-                                    description: posted_content["description"])
-
-            return [200, { 'Content-Type' => 'application/json' }, [ {:new_event => new_event}.to_json ]]  
-
-
-        elsif req.path.match(/events/) && req.delete?
-            del_content = JSON.parse(req.body.read)
-            Event.all.find{|event| event.id == del_content["id"]}.destroy
-
-            return [200, { 'Content-Type' => 'application/json' }, [ {:del_event => del_content}.to_json ]]  
-
-
-        elsif req.path.match(/events/) && req.patch?
-            patch_content = JSON.parse(req.body.read)
-            puts patch_content
-###########################add patch method  patch_event = 
-
-            return [200, { 'Content-Type' => 'application/json' }, [ {:patch_event => patch_event}.to_json ]] 
-
-
+            return [200, { 'Content-Type' => 'application/json' }, [ jobseekers.to_json ]]  
 
 
         elsif req.path.match(/jobseekers/) && req.post?
@@ -153,7 +116,26 @@ class Application
             return [200, { 'Content-Type' => 'application/json' }, [ {:patch_job_seeker => patch_job_seeker}.to_json ]] 
 
 
+        elsif req.path.match(/recruiters/) && req.get?
+            recruiters = Recruiter.all.map do |recruiter|
+                {id: recruiter.id, 
+                 name: recruiter.name, 
+                 location: recruiter.location, 
+                 company_name: recruiter.company_name,
+                 username: recruiter.username, 
+                 password: recruiter.password, 
+                 email: recruiter.email,
+                 logo: recruiter.logo,
+                 skills: recruiter.skills,
+                 view_skills: recruiter.view_skills,
+                 events: recruiter.events,
+                 view_events: recruiter.view_events,
+                 job_seekers: recruiter.job_seekers,
+                 all_matching_job_seekers: recruiter.all_matching_job_seekers
+                }
+            end
 
+            return [200, { 'Content-Type' => 'application/json' }, [ recruiters.to_json ]] 
 
 
         elsif req.path.match(/recruiters/) && req.post?
@@ -200,6 +182,19 @@ class Application
             return [200, { 'Content-Type' => 'application/json' }, [ {:patch_recruiters => patch_recruiters}.to_json ]] 
 
 
+        elsif req.path.match(/skills/) && req.get?
+            skills = Skill.all.map do |skill|
+                {id: skill.id, 
+                 name: skill.name, 
+                 profile_id: skill.profile_id,
+                 level: skill.level,
+                 user_type: skill.profile.user_type,
+                 skill_owner: skill.profile.user
+                }
+            end
+
+            return [200, { 'Content-Type' => 'application/json' }, [ skills.to_json ]]  
+
 
 
         elsif req.path.match(/skills/) && req.post?
@@ -209,7 +204,7 @@ class Application
             new_skill = Skill.create(
                                     name: posted_content["name"], 
                                     level: posted_content["level"], 
-                                    profile_id: posted_content["id"]
+                                    profile_id: posted_content["profile_id"]
                                 )
 
             return [200, { 'Content-Type' => 'application/json' }, [ {:new_skill => new_skill}.to_json ]]  
@@ -217,15 +212,18 @@ class Application
 
         elsif req.path.match(/skills/) && req.delete?
             del_content = JSON.parse(req.body.read)
+            puts del_content
             Skill.all.find{|skill| skill.id == del_content["id"]}.destroy
 
-            return [200, { 'Content-Type' => 'application/json' }, [ {:del_job_seeker => del_content}.to_json ]]  
+            return [200, { 'Content-Type' => 'application/json' }, [ {:del_skill => del_content}.to_json ]]  
 
 
         elsif req.path.match(/skills/) && req.patch?
             patch_content = JSON.parse(req.body.read)
-            puts patch_content["id"]
-###########################add patch method, patch_skill = 
+            # puts patch_content["name"]
+            patch_skill = Skill.all.find{|skill| skill.id == patch_content["id"]}
+            # puts patch_skill
+            patch_skill.update(:name => patch_content["name"], :level => patch_content["level"])
 
             return [200, { 'Content-Type' => 'application/json' }, [ {:patch_skill => patch_skill}.to_json ]] 
         

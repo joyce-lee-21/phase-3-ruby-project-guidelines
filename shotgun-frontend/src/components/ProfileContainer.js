@@ -1,6 +1,13 @@
 import ProfileSkills from "./ProfileSkills";
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { useState } from "react";
 
-function ProfileContainer( {userStatus, currentUser, recruiterArr, jobseekerArr} ) {
+function ProfileContainer( {userStatus, currentUser, setSkillChange} ) {
+
+    const [showPassword, setShowPassword] = useState(false)
+
     console.log(currentUser)
     return (
       <div className="profile-container">
@@ -14,36 +21,36 @@ function ProfileContainer( {userStatus, currentUser, recruiterArr, jobseekerArr}
                     <br></br>
                     <span className="user-details-text-box">
                         <h4>Name:</h4>
-                        <p>CHANGE THIS</p>
+                        <p>{currentUser.name}</p>
                     </span>
                     <span className="user-details-text-box">
                         <h4>Location:</h4>
-                        <p>CHANGE THIS</p>
+                        <p>{currentUser.location}</p>
                     </span>
                     <span className="user-details-text-box">
                         <h4>Username:</h4>
-                        <p>CHANGE THIS</p>
+                        <p>{currentUser.username}</p>
                     </span>
                     <span className="user-details-text-box">
                         <h4>Password:</h4>
-                        <p>CHANGE THIS</p>
+                        {/* <IconButton onClick={setShowPassword(!showPassword)}>
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton> */}
+                        <p>{currentUser.password}</p>
                     </span>
                     <span className="user-details-text-box">
                         <h4>Email:</h4>
-                        <p>CHANGE THIS</p>
+                        <p>{currentUser.email}</p>
                     </span>
                 </div>
             </div>
             <div className="skills-container">
                 <h2>Skills</h2>
-                <div>
                     <ProfileSkills 
                         userStatus={userStatus} 
-                        currentUser={currentUser} 
-                        recruiterArr={recruiterArr} 
-                        jobseekerArr={jobseekerArr}
+                        currentUser={currentUser}
+                        setSkillChange={setSkillChange}
                     />
-                </div>
             </div>
         </div>
       </div>

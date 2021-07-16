@@ -26,6 +26,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [recruiterArr, setRecruiterArr] = useState([])
   const [jobseekerArr, setJobseekerArr] = useState([])
+  const [skillChange, setSkillChange] = useState(false)
   const [eventArr, setEventArr] = useState([])
   
 
@@ -108,13 +109,24 @@ function App() {
       .then(setUserStatus("recruiter"))
   }
 
+  const onHeaderButtonClick = () => {
+      setCurrentUser(null)
+  }
+
+  const onSkillChange = (bool) => {
+    // console.log(bool)
+    if (bool) {
+      setCurrentUser(currentUser) 
+    }
+  }
+
 
   return (
     <div className="App">
       <Router>
         {/* <button onClick={history.push("/")}>yo</button> */}
         <Header currentUser={currentUser}
-                setCurrentUser={setCurrentUser}/>
+                setCurrentUser={onHeaderButtonClick}/>
         <Switch>
           <Route exact path="/">
             <Homepage />
@@ -141,7 +153,8 @@ function App() {
             <ProfileContainer userStatus={userStatus}
                               currentUser={currentUser}
                               recruiterArr={recruiterArr}
-                              jobseekerArr={jobseekerArr}/>
+                              jobseekerArr={jobseekerArr}
+                              setSkillChange={onSkillChange}/>
           </Route>
           <Route path="/events">
             <EventsContainer userStatus={userStatus}
