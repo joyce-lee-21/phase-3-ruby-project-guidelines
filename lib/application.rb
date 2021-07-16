@@ -64,6 +64,7 @@ class Application
                  password: job_seeker.password, 
                  email: job_seeker.email,
                  image: job_seeker.image,
+                 profile_id: job_seeker.profile.id,
                  skills: job_seeker.skills,
                  view_skills: job_seeker.view_skills,
                  events: job_seeker.events,
@@ -99,6 +100,7 @@ class Application
                 password: new_job_seeker.password, 
                 email: new_job_seeker.email,
                 image: new_job_seeker.image,
+                profile_id: new_job_seeker.profile.id,
                 skills: new_job_seeker.skills,
                 view_skills: new_job_seeker.view_skills,
                 events: new_job_seeker.events,
@@ -109,14 +111,6 @@ class Application
                }
 
             return [200, { 'Content-Type' => 'application/json' }, [ new_job_seeker_return.to_json ]]  
-
-
-        elsif req.path.match(/jobseekers/) && req.patch?
-            patch_content = JSON.parse(req.body.read)
-            puts patch_content["id"]
-###########################add patch method, patch_job_seeker = 
-
-            return [200, { 'Content-Type' => 'application/json' }, [ {:patch_job_seeker => patch_job_seeker}.to_json ]] 
 
 
         elsif req.path.match(/recruiters/) && req.get?
@@ -177,15 +171,6 @@ class Application
             return [200, { 'Content-Type' => 'application/json' }, [ new_recruiter_return.to_json ]]  
 
 
-
-        elsif req.path.match(/recruiters/) && req.patch?
-            patch_content = JSON.parse(req.body.read)
-            puts patch_content["id"]
-###########################add patch method, patch_recruiters = 
-
-            return [200, { 'Content-Type' => 'application/json' }, [ {:patch_recruiters => patch_recruiters}.to_json ]] 
-
-
         elsif req.path.match(/skills/) && req.get?
             skills = Skill.all.map do |skill|
                 {id: skill.id, 
@@ -204,14 +189,18 @@ class Application
         elsif req.path.match(/skills/) && req.post?
 
             posted_content = JSON.parse(req.body.read)
-            puts posted_content
-            new_skill = Skill.create(
-                                    name: posted_content["name"], 
-                                    level: posted_content["level"], 
-                                    profile_id: posted_content["profile_id"]
-                                )
+            # puts "USER ID: #{posted_content["user_id"]}"
+            # new_skill = Skill.create(
+            #                         name: posted_content["name"], 
+            #                         level: posted_content["level"], 
+            #                         profile_id: posted_content["profile_id"]
+            #                     )
+            # if posted_content["user_type"] == "recruiter" 
+            puts Recruiter.all.find_by(id: posted_content["user_id"]).add_skill(posted_content["name"], posted_content["level"])
+            # puts JobSeeker.all.find_by(id: posted_content["id"]).add_skill(posted_content["name"], posted_content["level"])
+            # end
 
-            return [200, { 'Content-Type' => 'application/json' }, [ {:new_skill => new_skill}.to_json ]]  
+            # return [200, { 'Content-Type' => 'application/json' }, [ {:new_skill => new_skill}.to_json ]]  
 
 
         elsif req.path.match(/skills/) && req.delete?

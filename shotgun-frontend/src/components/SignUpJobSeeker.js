@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   const handleJobSeekerSignUp = (e) => {
     e.preventDefault();
     onJobSeekerSignUp(enterSignUpName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpImage)
-    currentUser ? history.push("/profile") : console.log("not yet signed up")
+    currentUser ? console.log("account exists, login") : console.log("not yet signed up")
   }
 
   return (
@@ -156,15 +156,17 @@ const useStyles = makeStyles((theme) => ({
               onChange={(e)=>{setEnterSignUpPD(e.target.value)}}
               value={enterSignUpPD}
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
+            <Link to="/profile" style={{color: 'inherit', textDecoration: 'none'}}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
+            </Link>
             <Grid container>
               <Grid item xs>
                 <Link variant="body2" onClick={(e)=>setUserStatus("recruiter")}>

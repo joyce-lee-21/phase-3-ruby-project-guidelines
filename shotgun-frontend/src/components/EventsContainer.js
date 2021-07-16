@@ -45,6 +45,7 @@ function EventsContainer( {userStatus, currentUser} ) {
 
     const classes = useStyles();
 
+    
     // when a user clicks on edit - DONE!!
     const handleEventEdit = (id, name, date, location, desc) => {
         // console.log(id, name, date, location, desc)
@@ -61,7 +62,7 @@ function EventsContainer( {userStatus, currentUser} ) {
         let updated_event = {
             id: eventId,
             name: eventName,
-            event_date: eventDate, 
+            event_date: eventDate,
             location: eventLocation,
             description: eventDesc
         }
@@ -95,7 +96,7 @@ function EventsContainer( {userStatus, currentUser} ) {
     const handleEventAdd = () => {
         setEventView("add")
     }
-    // when a user clicks on save add
+    // when a user clicks on save add - NEEDS DATETIME FORMATTING
     const handleAddSave = (e) => {
         e.preventDefault()
         
