@@ -97,7 +97,8 @@ class Application
 
         elsif req.path.match(/events/) && req.delete?
             del_content = JSON.parse(req.body.read)
-            Event.all.find{|event| event.id == del_content["id"]}.destroy
+            # Event.all.find{|event| event.id == del_content["id"]}.destroy
+            puts del_content
 
             return [200, { 'Content-Type' => 'application/json' }, [ {:del_event => del_content}.to_json ]]  
 
@@ -136,8 +137,6 @@ class Application
 
 
 
-
-
         elsif req.path.match(/recruiters/) && req.post?
 
             posted_content = JSON.parse(req.body.read)
@@ -172,7 +171,7 @@ class Application
             new_skill = Skill.create(
                                     name: posted_content["name"], 
                                     level: posted_content["level"], 
-                                    profile_id: posted_content["id"]
+                                    profile_id: posted_content["profile_id"]
                                 )
 
             return [200, { 'Content-Type' => 'application/json' }, [ {:new_skill => new_skill}.to_json ]]  
@@ -180,15 +179,18 @@ class Application
 
         elsif req.path.match(/skills/) && req.delete?
             del_content = JSON.parse(req.body.read)
+            puts del_content
             Skill.all.find{|skill| skill.id == del_content["id"]}.destroy
 
-            return [200, { 'Content-Type' => 'application/json' }, [ {:del_job_seeker => del_content}.to_json ]]  
+            return [200, { 'Content-Type' => 'application/json' }, [ {:del_skill => del_content}.to_json ]]  
 
 
         elsif req.path.match(/skills/) && req.patch?
             patch_content = JSON.parse(req.body.read)
-            puts patch_content["id"]
-###########################add patch method, patch_skill = 
+            # puts patch_content["name"]
+            patch_skill = Skill.all.find{|skill| skill.id == patch_content["id"]}
+            # puts patch_skill
+            patch_skill.update(:name => patch_content["name"], :level => patch_content["level"])
 
             return [200, { 'Content-Type' => 'application/json' }, [ {:patch_skill => patch_skill}.to_json ]] 
         

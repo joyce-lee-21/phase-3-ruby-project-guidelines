@@ -6,6 +6,7 @@ prompt = TTY::Prompt.new
 # prompt.mask = prompt for password but masks what is typed in
 # profile_choice = prompt.select('Are you a Job Seeker or Recruiter?', ["Job Seeker", "Recruiter"])
 
+
 def jobseeker_homepage(current_user)
     prompt = TTY::Prompt.new
     # Home Page Start

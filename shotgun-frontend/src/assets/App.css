@@ -249,6 +249,15 @@ button:hover {
   flex-direction: column;
 }
 
+.skills-details-box {
+  display: flex;
+  justify-content: center;
+}
+
+.skills-details-box button {
+  width: 60px;
+  margin-left: 15px;
+}
 
 
 

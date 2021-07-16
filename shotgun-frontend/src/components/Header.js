@@ -2,10 +2,10 @@ import {NavLink} from 'react-router-dom';
 
 function Header( {currentUser, setCurrentUser} ) {
 
-
-    const handleClick = () => {
+    const handleLogout = () => {
         setCurrentUser(null)
     }
+
     return (
         <div className="header">
             
@@ -30,7 +30,7 @@ function Header( {currentUser, setCurrentUser} ) {
 
                     <div className="header-right">
                         <NavLink exact to="/" style={{ textDecoration: 'none' }}>
-                            <button className="logout">Logout</button>
+                            <button className="logout" onClick={handleLogout}>Logout</button>
                         </NavLink>
                     </div>
                 </>
@@ -39,7 +39,7 @@ function Header( {currentUser, setCurrentUser} ) {
                      <h2 className="logo">Skilled Match</h2>
                      <div className="header-right">
                         <NavLink to="/login" style={{ textDecoration: 'none' }}>
-                            <button className="login" onClick={handleClick}>Login</button>
+                            <button className="login">Login</button>
                         </NavLink>
                         <NavLink to="/signup" style={{ textDecoration: 'none' }}>
                             <button className="signup">Sign Up</button>
