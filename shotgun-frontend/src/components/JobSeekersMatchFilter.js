@@ -1,10 +1,11 @@
-// import '../assets/App.css';
 
-function JobSeekersMatchFilter() {
+
+function JobSeekersMatchFilter({onSearchChange}) {
     return (
-      <div className="JobSeekersMatchFilter">
-       <h1>JobSeekers Match Filter!</h1>
-      </div>
+      <div className="filter">
+      <input id="search-bar" type="text" placeholder="Search Event" 
+             onChange={(e)=>{onSearchChange(e.target.value)}}/>
+    </div>
     );
   }
   

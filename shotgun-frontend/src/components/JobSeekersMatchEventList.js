@@ -3,7 +3,7 @@ import JobSeekersEventItem from "./JobSeekersMatchEventItem";
 function JobSeekersMatchEventList({eventListOnDisplay}) {
   // console.log("eventListOnDisplay:",eventListOnDisplay)
   return (
-    <div>
+    <div className="match-event-list">
       {
 
         eventListOnDisplay.map(matchingEvent => 

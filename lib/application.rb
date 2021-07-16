@@ -87,6 +87,7 @@ class Application
                                     email: posted_content["enterSignUpEmail"],
                                     image: posted_content["enterSignUpImage"]
                                 )
+            new_job_seeker.create_profile
             
             new_job_seeker_return =                 
                 {id: new_job_seeker.id, 
@@ -151,6 +152,7 @@ class Application
                                     email: posted_content["enterSignUpEmail"],
                                     logo: posted_content["enterSignUpLogo"]
                                 )
+            new_recruiter.create_profile
 
 
             new_recruiter_return =                 
