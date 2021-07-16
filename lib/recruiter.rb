@@ -74,6 +74,10 @@ class Recruiter < ActiveRecord::Base
         self.all_matching_job_seekers.map{|matching_job_seeker| matching_job_seeker.name}
     end
 
+    def create_profile
+        Profile.create(user_id: self.id, user_type: "Recruiter")
+    end
+
 end
 
 # below works:

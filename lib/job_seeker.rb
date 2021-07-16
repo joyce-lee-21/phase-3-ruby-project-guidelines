@@ -94,6 +94,10 @@ class JobSeeker < ActiveRecord::Base
         self.all_matching_recruiters.map{|matching_recruiter| matching_recruiter.events}.flatten
     end
 
+    def create_profile
+        Profile.create(user_id: self.id, user_type: "JobSeeker")
+    end
+
 end
 
 # below works:
