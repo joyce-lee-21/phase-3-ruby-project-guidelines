@@ -3,9 +3,9 @@ import '../assets/App.css';
 import { 
   BrowserRouter as Router,
   Switch, 
-  Route,
-  useHistory
+  Route
 } from "react-router-dom";
+import {useHistory} from 'react-router'
 import React, { useState, useEffect } from "react";
 
 import SignUp from './SignUp';
@@ -26,9 +26,8 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [recruiterArr, setRecruiterArr] = useState([])
   const [jobseekerArr, setJobseekerArr] = useState([])
+  const [eventArr, setEventArr] = useState([])
   
-
-  const history = useHistory();
 
   //fetch
   useEffect(()=>{
@@ -45,6 +44,14 @@ function App() {
     .catch(error => console.error('Error:', error))
   },[])
 
+  useEffect(()=>{
+    fetch("http://localhost:9393/events")
+    .then(res => res.json())
+    .then(events => setEventArr(events) )
+    .catch(error => console.error('Error:', error))
+  },[])
+
+
 
   //Login submit on Login.js
   const onLoginSubmit = (enterLoginUsername, enterLoginPD) =>{
@@ -56,27 +63,49 @@ function App() {
     if (isRecruiter) {
       //set userStatus
       setUserStatus("recruiter")
-      //push to match page
-      // history.push("/matches")
       //set currentUser
       setCurrentUser(isRecruiter)
       console.log("currentUserInAppWhenRecruiterLogin", currentUser, "isRecruiter", isRecruiter)
     } else if (isJobSeeker) {
       setUserStatus("jobseeker")
       console.log("isJobSeeker",isJobSeeker)
-      // history.push("/matches")
       setCurrentUser(isJobSeeker)
     } else {
       alert("Incorrect username or password, please re-enter.");
     }
   }
-  //Login signup on SignUpJobSeeker.js
-  const onJobSeekerSignUp = (enterSignUpUsername, enterSignUpEmail, enterSignUpName, enterSignUpLocation, enterSignUpPD) => {
-    console.log(enterSignUpUsername, enterSignUpEmail, enterSignUpName, enterSignUpLocation, enterSignUpPD)
+
+  //signup on SignUpJobSeeker.js
+  const onJobSeekerSignUp = (enterSignUpName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpImage) => {
+    // POST
+    // console.log(enterSignUpName, enterSignUpLocation, enterSignUpUsername,  enterSignUpPD, enterSignUpEmail, enterSignUpImage)
+    fetch("http://localhost:9393/jobseekers", {
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    body:JSON.stringify({enterSignUpName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpImage
+    })
+    })
+    .then(res => res.json())
+    .then(data => setCurrentUser(data))
+    .then(setUserStatus("jobseeker"))
+
   }
 
-  const onRecruiterSignUp = (enterSignUpUsername, enterSignUpEmail, enterSignUpName, enterSignUpCompanyName, enterSignUpLocation, enterSignUpPD) => {
-    console.log(enterSignUpUsername, enterSignUpEmail, enterSignUpName, enterSignUpCompanyName, enterSignUpLocation, enterSignUpPD)
+  const onRecruiterSignUp = (enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo) => {
+    console.log(enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo)
+    fetch("http://localhost:9393/recruiters", {
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify({enterSignUpName,  enterSignUpCompanyName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpLogo 
+      })
+      })
+      .then(res => res.json())
+      .then(data => setCurrentUser(data))
+      .then(setUserStatus("recruiter"))
   }
 
 
@@ -95,16 +124,18 @@ function App() {
                     setUserStatus={setUserStatus} 
                     onJobSeekerSignUp={onJobSeekerSignUp}
                     onRecruiterSignUp={onRecruiterSignUp}
+                    currentUser={currentUser}
                     />
           </Route>
           <Route path="/login">
-            <Login onLoginSubmit={onLoginSubmit}/>
+            <Login onLoginSubmit={onLoginSubmit} currentUser={currentUser}/>
           </Route>
           <Route path="/matches">
             {userStatus === "recruiter" ? 
               <RecruitersMatchContainer currentUser={currentUser}/> 
               : 
-              <JobSeekersMatchContainer currentUser={currentUser}/>}
+              <JobSeekersMatchContainer currentUser={currentUser} 
+                                        eventArr={eventArr}/>}
           </Route>
           <Route path="/profile">
             <ProfileContainer userStatus={userStatus}

@@ -1,7 +1,7 @@
 import JobSeekersSideBarItem from "./JobSeekersSideBarItem";
 
-function JobSeekersSideBarList({currentUser}) {
-    console.log("currentUserInSideBarList", currentUser)
+function JobSeekersSideBarList({currentUser, onSideBarItemClick}) {
+    // console.log("currentUserInSideBarList", currentUser)
     return (
       <div className="job-seekers-side-bar-list">
        <h1>JobSeekersSideBarList</h1>
@@ -9,11 +9,9 @@ function JobSeekersSideBarList({currentUser}) {
             {
                 currentUser.all_matching_recruiters.map((matchingRecruiter) => 
                     <JobSeekersSideBarItem key={matchingRecruiter.id}
-                                           logo={matchingRecruiter.logo}
-                                           companyName={matchingRecruiter.company_name}
-                                           name={matchingRecruiter.name}
-                                           email={matchingRecruiter.email}
-                                           location={matchingRecruiter.location}
+                                           matchingRecruiter={matchingRecruiter}
+                                           onSideBarItemClick={onSideBarItemClick}
+
                     
                     />)
             }

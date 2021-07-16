@@ -3,6 +3,7 @@
 //npm install @material-ui/icons
 
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -47,18 +48,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
- function SignUpJobSeeker({setUserStatus, onJobSeekerSignUp}) {
+ function SignUpJobSeeker({setUserStatus, onJobSeekerSignUp, currentUser}) {
   const classes = useStyles();
+
+  const history= useHistory();
 
   const [enterSignUpUsername, setEnterSignUpUsername] = useState("")
   const [enterSignUpEmail, setEnterSignUpEmail] = useState("")
   const [enterSignUpName, setEnterSignUpName] = useState("")
   const [enterSignUpLocation, setEnterSignUpLocation] = useState("")
   const [enterSignUpPD, setEnterSignUpPD] = useState("")
+  const [enterSignUpImage, setEnterSignUpImage] = useState("")
 
   const handleJobSeekerSignUp = (e) => {
     e.preventDefault();
-    onJobSeekerSignUp(enterSignUpUsername, enterSignUpEmail, enterSignUpName, enterSignUpLocation, enterSignUpPD)
+    onJobSeekerSignUp(enterSignUpName, enterSignUpUsername, enterSignUpLocation, enterSignUpPD, enterSignUpEmail, enterSignUpImage)
+    currentUser ? history.push("/profile") : console.log("not yet signed up")
   }
 
   return (
@@ -124,7 +129,20 @@ const useStyles = makeStyles((theme) => ({
               autoFocus
               onChange={(e)=>{setEnterSignUpLocation(e.target.value)}}
               value={enterSignUpLocation}
-            />               
+            />
+             <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="image"
+              label="Profile Picture"
+              name="image"
+              autoComplete="image"
+              autoFocus
+              onChange={(e)=>{setEnterSignUpImage(e.target.value)}}
+              value={enterSignUpImage}       
+            />
             <TextField
               variant="outlined"
               margin="normal"
@@ -145,7 +163,7 @@ const useStyles = makeStyles((theme) => ({
               color="primary"
               className={classes.submit}
             >
-              Login
+              Sign Up
             </Button>
             <Grid container>
               <Grid item xs>

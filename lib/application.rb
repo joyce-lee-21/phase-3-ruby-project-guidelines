@@ -115,16 +115,34 @@ class Application
         elsif req.path.match(/jobseekers/) && req.post?
 
             posted_content = JSON.parse(req.body.read)
-            puts posted_content
+            puts posted_content 
             new_job_seeker = JobSeeker.create(
-                                    name: posted_content["name"], 
-                                    username: posted_content["username"], 
-                                    location: posted_content["location"], 
-                                    password: posted_content["password"],
-                                    email: posted_content["email"]
+                                    name: posted_content["enterSignUpName"],
+                                    username: posted_content["enterSignUpUsername"],
+                                    location: posted_content["enterSignUpLocation"], 
+                                    password: posted_content["enterSignUpPD"],
+                                    email: posted_content["enterSignUpEmail"],
+                                    image: posted_content["enterSignUpImage"]
                                 )
+            
+            new_job_seeker_return =                 
+                {id: new_job_seeker.id, 
+                name: new_job_seeker.name, 
+                location: new_job_seeker.location, 
+                username: new_job_seeker.username, 
+                password: new_job_seeker.password, 
+                email: new_job_seeker.email,
+                image: new_job_seeker.image,
+                skills: new_job_seeker.skills,
+                view_skills: new_job_seeker.view_skills,
+                events: new_job_seeker.events,
+                view_events: new_job_seeker.view_events,
+                recruiters: new_job_seeker.recruiters,
+                all_matching_recruiters: new_job_seeker.all_matching_recruiters,
+                all_matching_events: new_job_seeker.all_matching_events_for_front_end
+               }
 
-            return [200, { 'Content-Type' => 'application/json' }, [ {:job_seeker => new_job_seeker}.to_json ]]  
+            return [200, { 'Content-Type' => 'application/json' }, [ new_job_seeker_return.to_json ]]  
 
 
         elsif req.path.match(/jobseekers/) && req.patch?
@@ -143,15 +161,34 @@ class Application
             posted_content = JSON.parse(req.body.read)
             puts posted_content
             new_recruiter = Recruiter.create(
-                                    name: posted_content["name"], 
-                                    company_name: posted_content["company_name"],
-                                    username: posted_content["username"], 
-                                    location: posted_content["location"], 
-                                    password: posted_content["password"],
-                                    email: posted_content["email"]
+                                    name: posted_content["enterSignUpName"], 
+                                    company_name: posted_content["enterSignUpCompanyName"],
+                                    username: posted_content["enterSignUpUsername"], 
+                                    location: posted_content["enterSignUpLocation"], 
+                                    password: posted_content["enterSignUpPD"],
+                                    email: posted_content["enterSignUpEmail"],
+                                    logo: posted_content["enterSignUpLogo"]
                                 )
 
-            return [200, { 'Content-Type' => 'application/json' }, [ {:new_recruiter => new_recruiter}.to_json ]]  
+
+            new_recruiter_return =                 
+                {   id: new_recruiter.id, 
+                    name: new_recruiter.name, 
+                    location: new_recruiter.location, 
+                    company_name: new_recruiter.company_name,
+                    username: new_recruiter.username, 
+                    password: new_recruiter.password, 
+                    email: new_recruiter.email,
+                    logo:new_recruiter.logo,
+                    skills: new_recruiter.skills,
+                    view_skills: new_recruiter.view_skills,
+                    events: new_recruiter.events,
+                    view_events: new_recruiter.view_events,
+                    job_seekers: new_recruiter.job_seekers,
+                    all_matching_job_seekers: new_recruiter.all_matching_job_seekers
+                }
+
+            return [200, { 'Content-Type' => 'application/json' }, [ new_recruiter_return.to_json ]]  
 
 
 
