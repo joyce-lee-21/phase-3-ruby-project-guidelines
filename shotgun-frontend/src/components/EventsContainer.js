@@ -104,23 +104,22 @@ function EventsContainer( {userStatus, currentUser} ) {
         let new_event = {
             recruiter_id: currentUser.id,
             name: eventName,
-            event_date: new Intl.DateTimeFormat().format(eventDate), 
+            event_date: eventDate, 
             location: eventLocation,
             description: eventDesc
         }
 
-        // fetch("http://localhost:9393/events", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(new_event)
-        // })
-        // .then(data => console.log(data))
+        fetch("http://localhost:9393/events", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(new_event)
+        })
+        .then(data => console.log(data))
 
-        // setUserEvents([...userEvents, new_event])
-        // setEventView("view")
-        // console.log([...userSkills, new_skill])
+        setUserEvents([...userEvents, new_event])
+        setEventView("view")
     }
 
     // when a user clicks on delete - DONE!!
@@ -203,7 +202,7 @@ function EventsContainer( {userStatus, currentUser} ) {
                         required
                         fullWidth
                         name="Date"
-                        label="Event Date (YYYY-MM-DD)"
+                        label="Event Date (MM-DD-YYYY HH:MM)"
                         id="date"
                         onChange={(e)=>{setEventDate(e.target.value)}}
                         />
